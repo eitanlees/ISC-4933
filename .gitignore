@@ -1,8 +1,16 @@
-## Eitan: I have set up my latexmk/pdflatex commands
-## to create and store all generated files in a tmp 
-## folder to reduce clutter.
+## Eitan's additions
+#
+# I have set up my latexmk/pdflatex commands
+#  to create and store all generated files in a tmp 
+#  folder to reduce clutter.
 tmp/
 
+# Vim saves *.swp files while you are editing
+# as backups while editing files. When I commit while editing 
+# I don't want to include these
+*.swp
+
+#-------------------
 
 ## Core latex/pdflatex auxiliary files:
 *.aux
