@@ -1,17 +1,18 @@
+\begin{tikzpicture}
 
-    \begin{tikzpicture}
-\draw[->] (-.2,0) -- node[below]{x}(3,0);
-\draw[->] (0, -.2) -- node[left]{y}(0, 3);
+	% Axis
+	\draw[->] (-.2, 0) -- node[below]{x}(3, 0);
+	\draw[->] (0, -.2) -- node[left]{y}(0, 3);
 
-\draw [fill] (1.3112583208878787,1.0765211279204028) circle [radius=.05];
-\draw [fill] (2.276383642890794,2.044674796484563) circle [radius=.05];
-\draw [fill] (1.9163779073319989,1.6835130305468704) circle [radius=.05];
-\draw [fill] (0.7212503291945787,0.8422314649775957) circle [radius=.05];
-\draw [fill] (1.212503291945787,1.5422314649775957) circle [radius=.05];
-\draw [fill] (2.638675593592325,2.357531828971839) circle [radius=.05];
-\draw [fill] (1.923010531706664,1.416594971539452) circle [radius=.05];
-\draw [fill] (2.2117959600493227,2.3689196263469596) circle [radius=.05];
-
-\draw[dashed] (0,0) -- (3,2.8);
+	% Random points
+	\newcommand{\noise}{0.5}
+        \pgfmathsetseed{7}
+        \foreach \i in {0.1, 0.5, ..., 2.8} 
+		\pgfmathsetmacro{\x}{\i + \noise*rand}
+        	\pgfmathsetmacro{\y}{\i + \noise*rand}
+		\draw [fill] (\x, \y) circle [radius=.5mm];
+	
+	% Line of best fit
+	\draw[dashed, Gray] (0,0) -- (3,3);
 
 \end{tikzpicture}
