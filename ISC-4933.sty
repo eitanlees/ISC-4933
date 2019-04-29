@@ -1,14 +1,35 @@
 \ProvidesPackage{ISC-4933}
 
 \usepackage[utf8]{inputenc}
+
+% Better paragraph control
 \usepackage{parskip}
-\setlength{\parindent}{0pt}
-\usepackage{multicol}
+\setlength{\parindent}{0pt} % No indentation
+
+% Better list control
 \usepackage[shortlabels]{enumitem}
-\setlist[2]{nosep}
+
+% All the mathy things
 \usepackage{amsmath}
 \usepackage{amssymb}
+
+% Better color names
 \usepackage[dvipsnames]{xcolor}
 
+% For indented quotes
+\usepackage{csquotes}
+
+% For typesetting algorithms
+\usepackage{algorithm}
+\usepackage{algorithmic}
+
+% For drawing figures 
 \usepackage{tikz}
-\tikzset{>=latex}
+\tikzset{>=latex}  % better arrow head style
+
+% todo macro
+\newcommand{\todo}[1]{\textcolor{red}{TODO: #1}}
+
+% Big O notation macro
+\newcommand{\bigO}[1]{\mathcal{O}\left(#1\right)}
+
