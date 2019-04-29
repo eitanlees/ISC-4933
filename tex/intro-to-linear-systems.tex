@@ -1,5 +1,5 @@
 \section{Introduction to Linear Systems}
-%% Lecture 1
+%% Lecture 01
 A linear system is a set of equations of the form 
 %
 \begin{equation*}
@@ -124,7 +124,8 @@ The three main tasks to be done are
     \end{tabular}
 \end{enumerate}
 
-%% Lecture 2
+%% Lecture 02
+\subsection{Operation Counts}
 Performing each of these tasks requires some number of floating point operations (flops). 
 For example to compute $A\Vec{x} = \Vec{y}$ we would do the following
 %
@@ -196,9 +197,13 @@ Replace row 2 with
     \frac{a_{21}}{a_{11}} \times (\text{row 1}) - (\text{row 2})
 \end{equation*}
         This requires $\bigO{n}$ flops             \\
+    \end{tabular}
+\end{center}
         %
         %
         %
+\begin{center}
+    \begin{tabular}{p{6cm}p{6cm}}
 \begin{equation*}
     A = 
     \begin{bmatrix}  
@@ -216,9 +221,13 @@ We next replace row 3 with
     \frac{a_{31}}{a_{11}} \times (\text{row 1}) - (\text{row 3})
 \end{equation*}
 This requires $\bigO{n}$ flops                     \\
+    \end{tabular}
+\end{center}
         %
         %
         %
+\begin{center}
+    \begin{tabular}{p{6cm}p{6cm}}
 \begin{equation*}
     A = 
     \begin{bmatrix}  
@@ -237,9 +246,13 @@ Continuing in this manner for all rows,
             $\Rightarrow \bigO{n^2}$ operations 
         \end{displayquote}
                                                    \\
+    \end{tabular}
+\end{center}
         %
         %
         %
+\begin{center}
+    \begin{tabular}{p{6cm}p{6cm}}
 \begin{equation*}
     A = 
     \begin{bmatrix}  
@@ -298,7 +311,7 @@ where $U$ is the row echelon from of $A$, and
 $\Vec{b}$ has also been updated by the Gaussian
 elimination procedure.
 
-%% Lecture 3
+%% Lecture 03
  
 \begin{equation*}
     \begin{bmatrix}  
@@ -336,6 +349,8 @@ Therefore, it is more efficient to reduce $A$ to row echelon form and apply back
 substitution than it is to reduce $A$ to reduced row echeoln form. However,
 since reducing $A$ to row echelon form requires $\bigO{n^3}$ operations, the
 overall cost of solving $A\Vec{x}=\Vec{b}$ is $\bigO{n^3}$.
+
+\subsection{LU Decomposition}
 
 An alternative approach to solve $A\Vec{x}=\Vec{b}$ is to decompose $A$ into factors, 
 where each factor is more efficient to work with.  
@@ -447,3 +462,295 @@ We can instead factor $A$ as $A=LU$ and use the property of determinates.
   \det(A) = \det(LU) = \det(L) \times \det(U)\\
   = \prod_{k=1}^n l_{kk} \times \prod_{k=1}^n u_{kk}
 \end{gather*}
+
+%% Lecture 04
+
+\subsection{Spectral Decomposition}
+
+Another task that requires a determinant is the eigenvalue/eigenvector decomposition.  
+Given $A\in\mathbb{R}^{n\times m}$, an eigenvalue $\lambda$ and 
+a coresponding eigenvector $\Vec{x} \neq 0 $ satisfies
+%
+\begin{equation*}
+  A \Vec{x} = \lambda \Vec{x} \Rightarrow A\Vec{x}=\lambda I \Vec{x}
+  \Rightarrow (A-\lambda I) \Vec{x} = \Vec{0}
+\end{equation*}
+Since $\Vec{x} \neq 0$, we require that $A-\lambda I$ is not invertible
+%
+\begin{equation*}
+  \det(A-\lambda I) = 0
+\end{equation*}
+This is always a polynomial of degree $n$, $p(\lambda)$, and we require $p(\lambda)=0$. 
+Suppose
+%
+\begin{align*}
+  A &= 
+  \begin{bmatrix}
+    -2 & -4 & 2 \\
+    -2 & 1 & 2 \\
+    4 & 2 & 5
+  \end{bmatrix} 
+  \Rightarrow \det(A-\lambda I) = 
+            \begin{vmatrix}
+    -2-\lambda & -4 & 2 \\
+    -2 & 1-\lambda & 2 \\
+    4 & 2 & 5-\lambda
+  \end{vmatrix} \\
+    &\Rightarrow
+      (-2 - \lambda)
+      \begin{vmatrix}
+        1-\lambda & 2 \\
+        2 & 5-\lambda
+      \end{vmatrix}
+      + 4
+      \begin{vmatrix}
+        -2 & 2 \\
+        4 & 5-\lambda
+      \end{vmatrix}
+      + 2
+      \begin{vmatrix}
+        -2 & 1-\lambda \\
+        4 & 2
+      \end{vmatrix} = 0 \\
+    &\Rightarrow
+      (-2 \lambda) (\lambda^2 - 6 \lambda + 1) + 4 (2\lambda-18) + 2(-4\lambda-8) = 0 \\
+    &\Rightarrow -\lambda^3 + 4 \lambda^2 +27 \lambda - 90 =0 \\
+    &\Rightarrow (\lambda-3)(\lambda+5)(\lambda -6) = 0 \\
+    &\Rightarrow \text{The eigenvalues are } \lambda=3, -5, 6
+\end{align*}
+
+To find the eigenvectors, say the one correspoding to $\lambda=3$
+%
+\begin{equation*}
+  (A-\lambda I)\Vec{x} = \Vec{0} \Rightarrow (A - 3I)\Vec{x} = \Vec{0}
+\end{equation*}
+%
+\begin{equation*}
+  \begin{bmatrix}
+    -5 & -4 & 2 \\
+    -2 & -2 & 2 \\
+    4  & 2  & 2 \\
+  \end{bmatrix}
+  \rightarrow
+  \begin{bmatrix}
+    1  & 1  & -1 \\
+    -5 & -4 & 2 \\
+    2  & 1  & 1 \\
+  \end{bmatrix}
+  \rightarrow
+  \begin{bmatrix}
+    1 & 1  & -1 \\
+    0 & 1  & -3 \\
+    0 & -1 & 3 \\
+  \end{bmatrix}
+  \rightarrow
+  \begin{bmatrix}
+    1 & 1  & -1 \\
+    0 & 1  & -3 \\
+    0 & 0  & 0 \\
+  \end{bmatrix}
+\end{equation*}
+%
+$\Rightarrow x_3$ is free. Say $x_3=1$.
+%
+\begin{align*}
+  x_2 &= 3x_3 \Rightarrow x_2=3\\
+  x_1 &= -x_2 + x_3 = -3 + 1 = -2 \\
+  & \Rightarrow \Vec{x} = \begin{bmatrix}-2\\3\\1\end{bmatrix}
+\end{align*}
+
+We can easily check that $A\Vec{x}=3\Vec{x}$
+
+To find all eigenvalues we must
+\begin{enumerate}[1)]
+  \item Compute an $n\times n$ determinate
+  \item Find all roots, which may be complex, of a degree $n$ polynomial
+\end{enumerate}
+%
+To find all of the eigenvectors, we must perform $n$ linear solves, each of size
+$n\times n$.  
+Ignoring the root finding problem, this requires at least $n\cdot
+\bigO{n^3}=\bigO{n^4}$ operations.  
+To find the roots of $p(\lambda)$, we must use a iterative solver if $n\leq 5$ (thanks to Galois).
+Therefore, we must use an interative method such as \emph{Newton's method}.
+
+Every algorithm we've considered so far is what your Linear Algebra instructor
+taught you, but they are all impractical for large $n$.
+
+\subsection{Schur Compliment}
+We often solve linear systems with a natural partitioning
+%
+\begin{equation*}
+  \begin{bmatrix}
+    A & B \\
+    C & D
+  \end{bmatrix}
+  \begin{bmatrix}
+    \Vec{x} \\
+    \Vec{y}
+  \end{bmatrix}
+  = 
+  \begin{bmatrix}
+    \Vec{b}_x \\
+    \Vec{b}_y
+  \end{bmatrix}
+\end{equation*}
+%
+where
+$A\in\mathbb{R}^{n\times n}$,
+$B\in\mathbb{R}^{n\times m}$,
+$C\in\mathbb{R}^{m\times n}$,
+$D\in\mathbb{R}^{m\times m}$, 
+$\Vec{x}\in\mathbb{R}^n$,
+$\Vec{y}\in\mathbb{R}^m$,
+$\Vec{b}_x\in\mathbb{R}^n$,
+$\Vec{b}_y\in\mathbb{R}^m$,
+
+If $D$ is invertible, then the 2\textsuperscript{nd} row tells us
+%
+\begin{equation*}
+C\Vec{x} + D \Vec{y} = \Vec{b}_y \Rightarrow \Vec{y} = D^{-1} (\vec{b}_y - C\Vec{x})
+\end{equation*}
+%
+Substituting this expression into the 1\textsuperscript{st} equation
+\begin{align*}
+  A\Vec{x} + B \Vec{y} = \Vec{b}_x &\Rightarrow A\Vec{x} + BD^{-1} (\vec{b}_y - C\Vec{x}) = \Vec{b}_x\\
+  &\Rightarrow (A-BD^{-1}C) \Vec{x} = \Vec{b}_x -BD^{-1} \Vec{b}_y
+\end{align*}
+%
+The matrix $A-BD^{-1}C$ is called the \emph{Schur compliment} of the block $D$.
+
+Similarly, if $A$ is invertible, then
+\begin{align*}
+  A\Vec{x} + B \Vec{y} = \Vec{b}_x &\Rightarrow \Vec{x} = A^{-1}(\Vec{b}_x - B \Vec{y} ) \\
+  C\Vec{x} + D \Vec{y} = \Vec{b}_y &\Rightarrow CA^{-1}(\Vec{b}_x - B \Vec{y} ) + D \Vec{y} = \Vec{b}_y\\
+  &\Rightarrow (D-CA^{-1}B)\Vec{y} = \Vec{b}_y - CA^{-1}\Vec{b}_x
+\end{align*}
+%
+The matrix $D-CA^{-1}B$ is called the \emph{Schur compliment} of the block $A$.
+%
+%% Lecture 05
+%
+Assuming $D$ and its Schur compliment $(A-B^{-1}C)$ are invertible, we can solve
+for $\Vec{x}$ by
+%
+\begin{enumerate}[1)]
+\item Form $D^{-1}C$ and $D^{-1}\Vec{b}_y$\\
+  \textcolor{red}{$(m+1)$ applications of $D^{-1}$}
+\item Solve
+  \begin{equation*}
+(A-BD^{-1}C)\Vec{x} = \Vec{b}_x - BD^{-1}\Vec{b}_y = \Vec{b}
+  \end{equation*}
+  \textcolor{red}{$(n \times n)$ linear solve.}
+\end{enumerate}
+%
+Since $D$ is $m\times m$ and $A-BD^{-1}C$ is $n \times n$, these are smaller
+linear systems than the one to find $\Vec{x}$ and $\Vec{y}$ simultaneously.
+
+\subsection{Woodbury and Sherman-Morrison Identities}
+Consider the matrix equation
+%
+\begin{equation*}
+\begin{bmatrix}
+  A & U \\
+  V & -C^{-1}
+\end{bmatrix}
+\begin{bmatrix}
+  X\\
+  Y
+\end{bmatrix}
+=
+\begin{bmatrix}
+  I\\
+  0
+\end{bmatrix}
+\end{equation*}
+%
+where
+$A\in\mathbb{R}^{n \times n}$,
+$U\in\mathbb{R}^{n \times k}$,
+$V\in\mathbb{R}^{k \times n}$,
+$C\in\mathbb{R}^{k \times k}$,
+$X\in\mathbb{R}^{n \times n}$,
+$Y\in\mathbb{R}^{k \times n}$,
+$I\in\mathbb{R}^{n \times n}$,
+$0\in\mathbb{R}^{k \times n}$,
+%
+Typically $k \ll n$.
+
+We can use the Schur complement to find $X$
+%
+\begin{equation*}
+VX-C^{-1}Y=0 \Rightarrow Y=CVX
+\end{equation*}
+%
+Using the first equation
+\begin{align*}
+AX + UY = I &\Rightarrow AX + UCVX = I\\
+            &\Rightarrow (A+UCV)X = I \\
+            &\Rightarrow X=(A+UCV)^{-1}
+\end{align*}
+%
+That is, $X$ is the inverse of $A+UCV$.
+
+Next, we compute the Schur complement of the $(1,1)$ block
+\begin{equation*}
+AX+UY=I \Rightarrow X=A^{-1}(I-UY)
+\end{equation*}
+%
+Substituting into the second equation
+%
+\begin{align*}
+  VX-C^{-1} Y = 0 &\Rightarrow VA^{-1}(I-UY)-C^{-1}Y=0 \\
+                  &\Rightarrow \textcolor{ForestGreen}{\underbrace{
+                  \color{black}(-VA^{-1}U-C^{-1})}_{
+                      \substack{\text{Schur complement of} \\ \text{the (1,1) block}}
+                  }}Y = -VA^{-1}\\
+                  &\Rightarrow Y = (C^{-1} + VA^{-1}U)^{-1}VA^{-1}
+\end{align*}
+%
+Substituting this $Y$ back into the first equation
+%
+\begin{align*}
+AX&+U(C^{-1} + VA^{-1}U)^{-1}VA^{-1} = I\\
+  &\Rightarrow AX = I - U(C^{-1} + VA^{-1}U)^{-1}VA^{-1}\\
+  &\Rightarrow X = A^{-1} - A^{-1}U(C^{-1} + VA^{-1}U)^{-1}VA^{-1}\\
+\end{align*}
+Recalling that $X=(A+UCV)^{-1}$, we have 
+%
+\begin{equation*}
+  (A+UCV)^{-1} = A^{-1} - A^{-1}U(C^{-1} + VA^{-1}U)^{-1}VA^{-1}
+\end{equation*}
+%
+This is called the \emph{Woodbury} identity.
+
+It is useful if
+\begin{enumerate}[1)]
+\item $k$ is sufficiently small
+\item A fast way to apply $A^{-1}$.
+\end{enumerate}
+
+To apply the Woodbury identity, we require
+%
+\textcolor{ForestGreen}{
+\begin{itemize}[label={}]
+\item $k+1$ applications of $A^{-1}$ 
+\item 2 $k \times k$ linear solves
+\end{itemize}
+}
+
+This identity is useful since we often have a solver for $A\Vec{x}=\Vec{b}$, and
+then we need to invert a low rank modification of $A$.
+
+The most extreme case is if $k=1$. We have $\Vec{u}, \Vec{v} \in \mathbb{R}^{n \times 1}$.
+We can assume $c=1$ since any other non-zero value for $c$ can be rolled into
+$\Vec{u}$(or $\Vec{v}$)
+\begin{align*}
+  \Rightarrow(A+\Vec{u}\Vec{v}^T)^{-1} &= A^{-1} - A^{-1}\Vec{u}(\textcolor{ForestGreen}{ \underbrace{\color{black}1 + \Vec{v}^TA^{-1}\Vec{u}}_{\mathbb{R}}})^{-1}\Vec{v}^TA^{-1}\\
+                                       &=A^{-1} - \frac{A^{-1}\Vec{u}\Vec{v}^TA^{-1}}{1 + \Vec{v}^TA^{-1}\Vec{u}}
+\end{align*}
+
+
+This is the \emph{Sherman-Morrison} identity. Sometimes it is called the
+\emph{SMW} or \emph{Sherman-Morrison-Woodbury} identity.
+
