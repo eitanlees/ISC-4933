@@ -1,49 +1,62 @@
-
 \section{Introduction to Linear Systems}
 
 A linear system is a set of equations of the form 
-
-\begin{equation}
+%
+\begin{equation*}
     \sum_{j=1}^n a_{ij} x_j  = b_i \qquad i=1, \ldots, m
-\end{equation}
-
-We are typically given $a_{ij}$ and one of $x_j$ ir $b_i$. Our job is to find the other. In matrix form, 
-\begin{equation}
+\end{equation*}
+%
+We are typically given $a_{ij}$ and one of $x_j$ or $b_i$. 
+Our job is to find the other. In matrix form, 
+\begin{equation*}
     A \Vec{x} = \Vec{b}
-\end{equation}
-where $A \in \mathbb{R}^{m \times n}$, $\Vec{x}\in \mathbb{R}^{n}$, $\Vec{b}\in \mathbb{R}^{m}$
-
-\begin{equation}
+\end{equation*}
+where 
+$A \in \mathbb{R}^{m \times n}$, 
+$\Vec{x}\in \mathbb{R}^{n}$, 
+$\Vec{b}\in \mathbb{R}^{m}$
+%
+\begin{equation*}
     A = 
     \begin{bmatrix}
     a_{11} & a_{12} & \ldots & a_{1n}\\
     a_{21} & a_{22} & \ldots & a_{2n}\\
-    \vdots &  & \ddots & \vdots\\
+    \vdots & \vdots  & \ddots & \vdots\\
     a_{m1} & a_{m2} & \ldots & a_{mn}\\
     \end{bmatrix}
     ,\quad
     \Vec{x}  = \begin{bmatrix}x_1\\\vdots\\x_n\end{bmatrix}
     ,\quad
     \Vec{b}  = \begin{bmatrix}b_1\\\vdots\\b_m\end{bmatrix}
-\end{equation}
+\end{equation*}
 
 Linear systems arise when we 
 \begin{itemize}[label={--}]
     \item Discretize a linear differential equation or integral equation.
-    \item Linearizing a nonlinear differential equation or a nonlinear integral equation.
-    \item Interpolating data with basis functions such as polynomials, wavelets, Fourier expansions.
-    \item Optimizing an objective function $f(\Vec{x})$. 
+    \item Linearizing a nonlinear differential equation 
+	    or a nonlinear integral equation.
+    \item Interpolating data with basis functions 
+	    such as polynomials, wavelets, Fourier expansions.
+    \item Optimizing an objective function $f\left(\Vec{x}\right)$. 
     \item Statistical operations such as lienar regression. 
     \item Solve an inverse problem. 
     \item Data sciences.
 \end{itemize}
 
 With $A\in\mathbb{R}^{m\times n}$, we have 3 cases
-\begin{equation*}
-    1)\, m < n \qquad 2)\, m > n \qquad 3)\ m=n
-\end{equation*}
 
-If $m<n$, we have fewer equations than unknowns. Such a system typically has infinitely many solutions, and such a system is said to be \emph{underdetermined}. It can also have no solutions. 
+\begin{center}
+	\begin{enumerate}[1)]
+		\item $m<n$
+		\item $m>n$
+		\item $m=n$
+	\end{enumerate}
+\end{center}
+
+If $m<n$, we have fewer equations than unknowns. 
+Such a system typically has infinitely many solutions, 
+and such a system is said to be \emph{underdetermined}. 
+It can also have no solutions. 
 
 \underline{EX}:
 \begin{align*}
@@ -53,9 +66,16 @@ If $m<n$, we have fewer equations than unknowns. Such a system typically has inf
     & \text{\textcolor{red}{no solutions}}
 \end{align*}
 
-Underdetermined problems arise, for example, in inverse problems. Here, there is typically some kind of field that is unknown, and we only have a few measurements. For example in seismic, the distribution of the formations underground are predicted from only a few available measurements. 
+Underdetermined problems arise, for example, in inverse problems. 
+Here, there is typically some kind of field that is unknown, 
+and we only have a few measurements. 
+For example in seismic, the distribution of the formations underground 
+are predicted from only a few available measurements. 
 
-If we have $m>n$, we have more equations than unknowns. Such a system typically has no solution, and such a system is said to be \emph{overdetermined}. It can also have 1 solution or infinitely many solutions. 
+If we have $m>n$, we have more equations than unknowns. 
+Such a system typically has no solution, 
+and such a system is said to be \emph{overdetermined}. 
+It can also have 1 solution or infinitely many solutions. 
 
 
 \underline{EX}:
@@ -68,10 +88,11 @@ If we have $m>n$, we have more equations than unknowns. Such a system typically 
     & &\hspace{-3em}\text{\textcolor{red}{no solutions}}
 \end{align*}
 
-Overdetermined problems arise, for example, in interpolation. Suppose we are given data points $(x_i, y_i),\, i=1, \ldots, m$ and we seek a linear function interpolating this data.  
-
+Overdetermined problems arise, for example, in interpolation. 
+Suppose we are given data points $(x_i, y_i),\, i=1, \ldots, m$ 
+and we seek a linear function interpolating this data.  
 Suppose the interpolant is $f(x) = c_0 + c_1 x$
-
+%
 \begin{align*}
     c_0 + c_1x_1 &= y_1 \\
     c_0 + c_1x_2 &= y_2 \\
@@ -84,17 +105,20 @@ Suppose the interpolant is $f(x) = c_0 + c_1 x$
 	\input{fig/linear-interpolation.tex}
 \end{center}
 
-Let's focus on the case $m=n$ and suppose that $A\Vec{x} = \Vec{b}$ has a unique solution for every $\Vec{b}$. The three main tasks to be done are 
-
-\begin{enumerate}[{label=\arabic*)}]
+Let's focus on the case $m=n$ and suppose that
+$A\Vec{x} = \Vec{b}$ has a unique solution for every $\Vec{b}$. 
+The three main tasks to be done are 
+%
+\begin{enumerate}[1)]
     \item Compute $A\Vec{x}$ for some $\Vec{x}\in\mathbb{R}^n$
     \item Solve $A\Vec{x}=\Vec{b}$ for some $\Vec{b}\in\mathbb{R}^n$
     \item Decompose $A$ as 
     
-    \begin{tabular}{ll}
+	    \begin{tabular}{lp{6cm}}
          $A=LU$ & Lower-Upper Decomposition  \\
-         $A=QR$ & where Q is orthogonal ($Q^T=Q^{-1}$), R is upper triangular\\
-         $A=U\Sigma V^T$ & Singular Value Decomposition where $U, V$ are orthogonal, $\Sigma$ is diagonal\\
+         $A=QR$ & where Q is orthogonal ($Q^T=Q^{-1}$) and R is upper triangular\\
+         $A=U\Sigma V^T$ & Singular Value Decomposition 
+	 			where $U, V$ are orthogonal and $\Sigma$ is diagonal\\
          $A=VDV^{-1}$ & Eigenvalue Decomposition\\
          $A=A_{(:, J)}X$ & Interpolative Decomposition
     \end{tabular}
