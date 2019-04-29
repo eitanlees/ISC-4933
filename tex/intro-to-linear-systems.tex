@@ -1,5 +1,5 @@
 \section{Introduction to Linear Systems}
-
+%% Lecture 1
 A linear system is a set of equations of the form 
 %
 \begin{equation*}
@@ -123,3 +123,327 @@ The three main tasks to be done are
          $A=A_{(:, J)}X$ & Interpolative Decomposition
     \end{tabular}
 \end{enumerate}
+
+%% Lecture 2
+Performing each of these tasks requires some number of floating point operations (flops). 
+For example to compute $A\Vec{x} = \Vec{y}$ we would do the following
+%
+\begin{algorithm}
+    \begin{algorithmic} 
+        \FOR{$i = 1, \ldots, n$}
+            \STATE $y_i = 0$ 
+            \FOR{$j = 1, \ldots, n$}
+                \STATE $y_i = y_i + a_{ij}x_j$ 
+            \ENDFOR
+        \ENDFOR
+    \end{algorithmic}
+\end{algorithm}
+%
+For each $i$, computing $y_i$ requires $n$ additions and $n$ multiplications. 
+This must be done for each $i=1, \ldots, n$
+%
+\begin{displayquote}
+$\Rightarrow$ We require $n \cdot 2n = 2n^2$ flops
+\end{displayquote}
+%
+We are interested in the trend of the number of flops. 
+Therefore, the 2 doesn't really matter. 
+We write the following
+%
+\begin{displayquote}
+    $\Rightarrow$ The number of flops to compute $A\Vec{x}$ is $\bigO{n^2}$
+\end{displayquote}
+%
+The way to interpret the significance is to ask 
+how many more flops are required if $n$ is doubled.
+For the problem of size $n$, we require $Cn^2$ operations. 
+If $n$ is doubled, we require $C(2n)^2=4Cn^2$
+%
+\begin{displayquote}
+$\Rightarrow$ The increase in the amount of flops is $\frac{4Cn^2}{Cn^2} = 4$
+\end{displayquote}
+
+As we might expect, 
+solving $A\Vec{x} = \Vec{b}$ is more expensive than doing matrix-vector multiplication. 
+Suppose we use Gaussian elimination. 
+Then, solving $A\Vec{x}=\Vec{b}$ is equivalent to reducing $A$ to 
+%
+\begin{enumerate}
+    \item Reduced row echelon form
+    \item Row echelon form and use back substitution
+\end{enumerate}
+%
+Let's find the complexity (number of flops/operations) 
+to reduce $A$ to row echelon form. 
+Suppose row swaps are not required
+%
+\begin{center}
+    \begin{tabular}{p{6cm}p{6cm}}
+\begin{equation*}
+    A = 
+    \begin{bmatrix}  
+        a_{11} & a_{12} & a_{13} & \ldots & a_{1n} \\
+        a_{21} & a_{22} & a_{23} & \ldots & a_{2n} \\
+        a_{31} & a_{32} & a_{33} & \ldots & a_{3n} \\
+        \vdots & \vdots & \vdots & \ddots & \vdots \\
+        a_{n1} & a_{n2} & a_{n3} & \ldots & a_{nn} \\
+    \end{bmatrix}  
+\end{equation*} 
+               & 
+        \vspace{1em}
+Replace row 2 with
+\begin{equation*}
+    \frac{a_{21}}{a_{11}} \times (\text{row 1}) - (\text{row 2})
+\end{equation*}
+        This requires $\bigO{n}$ flops             \\
+        %
+        %
+        %
+\begin{equation*}
+    A = 
+    \begin{bmatrix}  
+        a_{11} & a_{12} & a_{13} & \ldots & a_{1n} \\
+        0      & a_{22} & a_{23} & \ldots & a_{2n} \\
+        a_{31} & a_{32} & a_{33} & \ldots & a_{3n} \\
+        \vdots & \vdots & \vdots & \ddots & \vdots \\
+        a_{n1} & a_{n2} & a_{n3} & \ldots & a_{nn} \\
+    \end{bmatrix}  
+\end{equation*}
+               & 
+        \vspace{1em}
+We next replace row 3 with
+\begin{equation*}
+    \frac{a_{31}}{a_{11}} \times (\text{row 1}) - (\text{row 3})
+\end{equation*}
+This requires $\bigO{n}$ flops                     \\
+        %
+        %
+        %
+\begin{equation*}
+    A = 
+    \begin{bmatrix}  
+        a_{11} & a_{12} & a_{13} & \ldots & a_{1n} \\
+        0      & a_{22} & a_{23} & \ldots & a_{2n} \\
+        0      & a_{32} & a_{33} & \ldots & a_{3n} \\
+        \vdots & \vdots & \vdots & \ddots & \vdots \\
+        a_{n1} & a_{n2} & a_{n3} & \ldots & a_{nn} \\
+    \end{bmatrix}  
+\end{equation*}
+               & 
+        \vspace{1em}
+Continuing in this manner for all rows,
+        we require $\bigO{n}$ operations $n-1$ times
+        \begin{displayquote}
+            $\Rightarrow \bigO{n^2}$ operations 
+        \end{displayquote}
+                                                   \\
+        %
+        %
+        %
+\begin{equation*}
+    A = 
+    \begin{bmatrix}  
+        a_{11} & a_{12} & a_{13} & \ldots & a_{1n} \\
+        0      & a_{22} & a_{23} & \ldots & a_{2n} \\
+        0      & a_{32} & a_{33} & \ldots & a_{3n} \\
+        \vdots & \vdots & \vdots & \ddots & \vdots \\
+        0      & a_{n2} & a_{n3} & \ldots & a_{nn} \\
+    \end{bmatrix}  
+\end{equation*}
+               & 
+        \vspace{1em}
+        Moving to the 2\textsuperscript{nd} column, we use $a_{22}$ as a pivot to make $a_{i2}=0$
+        for $i=3, \ldots, n$
+    \end{tabular}
+\end{center}
+
+The first step is to replace row 3 with 
+%
+\begin{equation*}
+    \frac{a_{32}}{a_{22}} (\text{row 1})-(\text{row 3})
+\end{equation*}
+%
+This requires $\bigO{n-1}$ operations.
+
+Repeating for each row means we require 
+$\bigO{(n-1)(n-2)}$ operations to make the second column 
+to be in the row echelon form.  
+Continuing for each column, we require
+
+\hspace{1em}
+\begin{tabular}{ll}
+    $\bigO{n^2}$ & operations for column 1 \\
+    $\bigO{(n-1)^2}$ & operations for column 2\\
+    $\bigO{(n-2)^2}$ & operations for column 3\\
+    $\qquad\vdots$&\\
+    $\bigO{1^2}$ & operations for column $(n-1)$
+\end{tabular}
+
+$\Rightarrow$ The total cost of reducing $A$ to row echelon form is 
+%
+\begin{gather*}
+    Cn^2 + C(n-1)^2 + C(n-2)^2 + \ldots + C2^2 + C1^2 = C \sum_{j=1}^n j^2\\
+    = C \frac{n(n+1)(2n+1)}{6} = \bigO{n^3} \text{ flops}
+\end{gather*}
+%
+Reducing $A$ further to reduce row echelon form 
+requires another $\mathcal{O}(n^3)$ operations.
+Alternatively, we can solve 
+%
+\begin{equation*}
+    U\Vec{x} = \Vec{b} 
+\end{equation*}
+%
+where $U$ is the row echelon from of $A$, and 
+$\Vec{b}$ has also been updated by the Gaussian
+elimination procedure.
+
+%% Lecture 3
+ 
+\begin{equation*}
+    \begin{bmatrix}  
+        u_{11} & u_{12} & u_{13} & \ldots & u_{1n} \\
+        0      & u_{22} & u_{23} & \ldots & u_{2n} \\
+        0      & 0      & u_{33} & \ldots & u_{3n} \\
+        \vdots & \vdots & \vdots & \ddots & \vdots \\
+        0      & 0      & 0      & \ldots & u_{nn} \\
+    \end{bmatrix}  
+    \begin{bmatrix}x_1\\x_2\\x_3\\\vdots\\x_n\end{bmatrix}=
+    \begin{bmatrix}b_1\\b_2\\b_3\\\vdots\\b_n\end{bmatrix}
+\end{equation*}
+%
+\begin{equation*}
+  x = \frac{b_n}{u_{nn}}
+\end{equation*}
+%  
+\begin{align*}
+  u_{(n-1)(n-1)} x_{n-1} + u_{(n-1)n} x_n = b_{n-1} \quad &\Rightarrow \quad
+  x_{n-1} = \frac{b_{n-1}-u_{(n-1)n}x_n}{u_{(n-1)(n-1)}}\\&\vdots
+\end{align*}
+%
+\begin{equation*}
+  x_k  = \frac{b_k - \sum_{j=k+1}^n u_{kj}x_j}{u_{kk}} \qquad k=n, n-1, \ldots, 3, 2, 1
+\end{equation*}
+%
+Solving for $x_k$ requires $\bigO{n-k}$ operations to compute the summation. 
+Therefore, solving for $\Vec{x}$ requires
+%
+\begin{equation*}
+	\bigO{1+2+3+\ldots+n} = \bigO{\frac{n(n+1)}{2}} = \bigO{n^2}
+\end{equation*}
+%
+Therefore, it is more efficient to reduce $A$ to row echelon form and apply back
+substitution than it is to reduce $A$ to reduced row echeoln form. However,
+since reducing $A$ to row echelon form requires $\bigO{n^3}$ operations, the
+overall cost of solving $A\Vec{x}=\Vec{b}$ is $\bigO{n^3}$.
+
+An alternative approach to solve $A\Vec{x}=\Vec{b}$ is to decompose $A$ into factors, 
+where each factor is more efficient to work with.  
+For instance, suppose we decompose $A$ as
+%
+\begin{equation*}
+A=LU
+\end{equation*}
+%
+where $L$ is lower triangular and $U$ is upper triangular.
+Then to solve $A\Vec{x}=\Vec{b}$, we can instead solve
+%
+\begin{equation*}
+LU\Vec{x}=\Vec{b}
+\end{equation*}
+%
+Letting $\Vec{y}=U\Vec{x}$, this is equivalent to solving
+%
+\begin{align*}
+  L\Vec{y}&=\Vec{b}\\
+  U\Vec{x}&=\Vec{y}
+\end{align*}
+%
+Solving each of these linear systems requires $\bigO{n^2}$ flops using
+backward/forward substitution. However, we need to find $L$ and $U$.
+Unfortunately, the $LU$ decomposition uses Gaussian elimination which we know
+requires $\bigO{n^3}$ operations.
+
+One instance where it makes sense to use $LU$ is when solving
+$A\Vec{x_k}=\Vec{b_k}$ for many right ahnd sides $\Vec{b_k}$. We can then do the
+following
+%
+\begin{algorithm}
+    \begin{algorithmic} 
+      \STATE Find $L$, $U$ with $A=UL$ \hspace{1 cm} \textcolor{red}{$\bigO{n^3}$}
+      \FOR{$k=1, 2, 3, \ldots$}
+        \STATE Solve $L\Vec{y}=\Vec{b}$ \hspace{1 cm} \textcolor{red}{$\bigO{n^2}$}
+        \STATE Solve $U\Vec{x}=\Vec{y}$ \hspace{1 cm} \textcolor{red}{$\bigO{n^2}$}
+      \ENDFOR
+    \end{algorithmic} 
+\end{algorithm}
+%
+If there are $M$ right hand sides, this requires $\bigO{n^3+Mn^2}$ operations, 
+while applying Gaussian elimination requires $\bigO{Mn^3}$ operations.  
+
+Another way to solve $A\Vec{x}=\Vec{b}$ is to use Cramer's Rule.
+Suppose $A\Vec{x}=\Vec{b}$. 
+Then, the $i$\textsuperscript{th} entry of $\Vec{x}$ is 
+%
+\begin{equation*}
+	x_i = \frac{\det(A_i)}{\det(A)}
+\end{equation*}
+%
+where $A_I$ is the matrix $A$ with it's 
+$i$\textsuperscript{th} column replaced with $\Vec{b}$. 
+Therefore, to find $\Vec{x}$, we have to compute $n+1$ determinates. 
+The method you learnt in linear algebra is called the Laplace expansion. 
+For $n=3$, this is 
+%
+\begin{align*}
+  \det
+  \begin{bmatrix}
+    a_{11} & a_{12} & a_{13} \\ 
+    a_{21} & a_{22} & a_{23} \\ 
+    a_{31} & a_{32} & a_{33} \\ 
+  \end{bmatrix}
+  =
+  a_{11}
+  \begin{vmatrix}
+    a_{22} & a_{23} \\ 
+    a_{32} & a_{33} \\ 
+  \end{vmatrix}
+  -
+    a_{12}
+  \begin{vmatrix}
+    a_{21} & a_{23} \\ 
+    a_{31} & a_{33} \\ 
+  \end{vmatrix}
+  +
+    a_{13}
+  \begin{vmatrix}
+    a_{21} & a_{22} \\ 
+    a_{31} & a_{32} \\ 
+  \end{vmatrix}
+\end{align*}
+%
+\begin{displayquote}
+  $\Rightarrow$ We have to compute 3 $2\times2$ determinates. 
+\end{displayquote}
+%
+If $n=4$, we have to compute 4 $3\times3$ determinates, or $4\times3=12$
+$2\times2$ determinates. For an arbitrary $n$, we have to compute
+\begin{align*}
+  &n \qquad (n-1)\times(n-1) \quad \text{determinates} \\
+  & \parallel\\
+  & n(n-1) \qquad (n-2)\times(n-2) \quad \text{determinates}\\
+  & \parallel \quad \vdots\\
+  & n(n-1)(n-2) \ldots (3) \qquad 2\times2 \quad \text{determinates}
+\end{align*}
+%
+\begin{displayquote}
+$\Rightarrow$ We require $\bigO{n!}$ operations
+\end{displayquote}
+%
+Fortunately, computing $\det(A)$ is not an NP-hard problem. 
+We can instead factor $A$ as $A=LU$ and use the property of determinates.
+%
+\begin{gather*}
+  \det(A) = \det(LU) = \det(L) \times \det(U)\\
+  = \prod_{k=1}^n l_{kk} \times \prod_{k=1}^n u_{kk}
+\end{gather*}
