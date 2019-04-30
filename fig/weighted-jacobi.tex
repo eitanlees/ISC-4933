@@ -1,0 +1,35 @@
+\begin{tikzpicture}
+\begin{axis}[ 
+axis lines=middle,
+xlabel={$j$}, 
+ylabel={$\lambda_j$},
+x label style={at={(axis description cs:1.05, 0.5)},anchor=west},
+y label style={at={(axis description cs:0,.5)},anchor=east},
+samples=100,  
+very thick,
+domain=0:10, 
+ymin=-1.1, 
+ymax=1.1,
+xtick={5, 10},
+xticklabels={$\frac{n}{2}$, $n$},
+ytick={-1, 1},
+yticklabels={-1, 1},
+legend pos=outer north east
+]
+\addplot+[no marks, color=C0] {1-2*(0)*sin(deg(x)*pi/(2*10))^2};
+\addlegendentry{$\omega=0$}
+
+\addplot+[no marks, color=C1] {1-2*(1/2)*sin(deg(x)*pi/(2*10))^2};
+\addlegendentry{$\quad\omega=1/2$}
+
+\addplot+[no marks, color=C2] {1-2*(2/3)*sin(deg(x)*pi/(2*10))^2};
+\addlegendentry{$\quad\omega=2/3$}
+
+\addplot+[no marks, color=C3] {1-2*(1)*sin(deg(x)*pi/(2*10))^2};
+\addlegendentry{$\omega=1$}
+
+\addplot[no marks, black, dashed] coordinates { (0,.333) (5,0.333) };
+\addplot[no marks, black, dashed] coordinates { (0, -0.333) (10,-0.333) };
+
+\end{axis}
+\end{tikzpicture}

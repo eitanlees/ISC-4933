@@ -1,6 +1,80 @@
 \ProvidesPackage{ISC-4933}
 
+% Unicode encoding
 \usepackage[utf8]{inputenc}
+
+% Better color names
+\usepackage[dvipsnames]{xcolor}
+\definecolor{C0}{HTML}{1F77B4}
+\definecolor{C1}{HTML}{FF7F0E}
+\definecolor{C2}{HTML}{2CA02C}
+\definecolor{C3}{HTML}{D62728}
+\definecolor{C4}{HTML}{9467BD}
+
+% All the mathy things
+\usepackage{amsmath}
+\usepackage{amssymb}
+
+
+\usepackage{pgfplots}
+\pgfplotsset{compat=1.5}
+
+
+% For drawing figures 
+% Tikz Configuration
+% ------------------
+\usepackage{tikz}
+\usetikzlibrary{
+    arrows,
+    matrix,
+    positioning
+}
+
+
+% Global arrow head style
+\tikzset{>=latex}  
+
+
+\newcommand{\tikzmark}[1]{\tikz[overlay, remember picture] \coordinate[xshift=3pt](#1);}
+\tikzset{every picture/.style=remember picture}
+
+\tikzset{
+    dots/.style={
+        line width=1pt,
+        line cap=round,
+        dash pattern=on 0pt off 5pt
+    }
+}
+
+\tikzset{
+    bmatrix/.style={
+      matrix of math nodes,
+      nodes in empty cells,
+      right delimiter={]},
+      left delimiter={[} ,
+      inner sep=0,
+      nodes={inner sep=.3333em},
+    }
+}
+
+\tikzset{
+    stamp/.style={
+  circle,
+  draw=red!80,
+  inner sep=0pt,
+  minimum size=12pt,
+  xshift=0em,
+  yshift=.3em,
+  scale=.8
+    }
+}
+
+% ------------------
+
+
+% For typesetting algorithms
+\usepackage{algorithm}
+\usepackage{algorithmic}
 
 % Better paragraph control
 \usepackage{parskip}
@@ -9,23 +83,18 @@
 % Better list control
 \usepackage[shortlabels]{enumitem}
 
-% All the mathy things
-\usepackage{amsmath}
-\usepackage{amssymb}
-
-% Better color names
-\usepackage[dvipsnames]{xcolor}
+% Cancel packages to slash variables
+\usepackage[]{cancel} 
 
 % For indented quotes
 \usepackage{csquotes}
 
-% For typesetting algorithms
-\usepackage{algorithm}
-\usepackage{algorithmic}
 
-% For drawing figures 
-\usepackage{tikz}
-\tikzset{>=latex}  % better arrow head style
+
+% Hyperlinks
+\usepackage{hyperref} 
+
+\usepackage{makecell}
 
 % todo macro
 \newcommand{\todo}[1]{\textcolor{red}{TODO: #1}}
@@ -33,3 +102,4 @@
 % Big O notation macro
 \newcommand{\bigO}[1]{\mathcal{O}\left(#1\right)}
 
+\newcommand\bigzero{\makebox(0,0){\text{\huge0}}}

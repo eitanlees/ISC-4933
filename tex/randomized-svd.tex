@@ -1,0 +1,61 @@
+
+\section{The Singular Value Decomposition (SVD)}
+
+
+The SVD is arguably the most important matrix decomposition in linear algebra.
+Unlike the eigendecomposition, $LU$, and others, the SVD always exists and the
+matrix need not be square. A SVD of $A\in\mathbb{R}^{m \times n}$ is
+
+\begin{equation*}
+A= U \Sigma V^{T}
+\end{equation*}
+
+Where $U\in \mathbb{R}^{(m \times m)}$ and $V \in \mathbb{R}^{(n \times n)}$ are
+orthogonal and $\Sigma\in\mathbb{R}^{(m \times n)}$ is a diagonal matrix with
+only non-negative entries.
+
+\underline{Definition}
+
+A matrix $U\in \mathbb{R}^{(m \times m)}$ is orthogonal if
+\begin{enumerate}[1)]
+\item The columns/rows are orthogonal
+\item $U^{T}U = UU^{T} = I$
+\item $U^{-1} = U^{T}$
+\end{enumerate}
+
+The diagonal entries of $\Sigma$ are denoted by $\sigma_1, \sigma_2, \ldots,
+\sigma_p$ where $p=\min(m, n)$. We always order the columns of $U$, rows of
+$V$, and diagonal of $\Sigma$ so that $\sigma_1 \geq \sigma_2 \geq \sigma_3 \geq
+\ldots \geq \sigma_p \geq 0$
+
+Having the SVD of a matrix is very useful. With an SVD, we can form the pseudo
+inverse of $A$
+
+\begin{equation*}
+A^\dagger  = V \Sigma^\dagger U^T
+\end{equation*}
+where $\Sigma^\dagger$ is the transpose of $\Sigma$ and invert the non-zero
+entries
+
+
+\underline{Ex}
+\begin{equation*}
+  \Sigma =
+  \begin{bmatrix}
+    4 & 0 & 0 & 0 & 0 \\
+    0 & 2 & 0 & 0 & 0 \\
+    0 & 0 & 1 & 0 & 0 \\
+    0 & 0 & 0 & 0 & 0 \\
+  \end{bmatrix} \Rightarrow
+  \Sigma^\dagger =
+  \begin{bmatrix}
+    1/4 & 0   & 0 & 0  \\
+    0   & 1/2 & 0 & 0  \\
+    0   & 0   & 1 & 0  \\
+    0   & 0   & 0 & 0  \\
+    0   & 0   & 0 & 0  \\
+  \end{bmatrix}
+\end{equation*}
+
+
+
