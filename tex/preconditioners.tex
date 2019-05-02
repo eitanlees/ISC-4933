@@ -133,60 +133,9 @@ with
 \end{cases}
 \end{equation*}
 
-\begin{tikzpicture}
-    \matrix[
-    matrix of math nodes,
-    nodes in empty cells,
-    left delimiter={[},
-    right delimiter={]},
-    ](A){
-    2&-1&&&&&\\
-    -1&2&-1&&&&\\
-    &-1&2&-1&&&\\
-    &&-1&2&-1&&\\
-    &&&-1&2&-1&\\
-    &&&&-1&2&-1\\
-    &&&&&-1&2\\
-    };
-    \node[left=.5em of A](){$A=$};
-    \node[right=of A-1-7](){$I_1=\{1, 2\}$};
-    \node[right=of A-4-7](){$I_2=\{3, 4\}$};
-    \node[right=of A-7-7](){$I_3=\{5, 6, 7\}$};
-    \node[font=\Huge]() at (A-2-6) {0};
-    \node[font=\Huge]() at (A-6-2) {0};
-\end{tikzpicture}
+\input{fig/pre-poisson-mat.tex}
 
-\begin{tikzpicture}
-    \matrix[
-    matrix of nodes,
-    nodes in empty cells,
-    left delimiter={[},
-    right delimiter={]},
-    every node/.style={minimum size=1.5em, anchor=center}
-    ](P){
-    2&-1&&&&&\\
-    -1&2&&&&&\\
-    &&2&-1&&&\\
-    &&-1&2&&&\\
-    &&&&2&-1&0\\
-    &&&&-1&2&-1\\
-    &&&&0&-1&2\\
-    };
-    \node[left=.5em of P](){$\Rightarrow P = $};
-    \node[font=\Huge]() at (P-2-6) {0};
-    \node[font=\Huge]() at (P-6-2) {0};
-    \begin{scope}[red]
-
-    \draw[decoration={brace, mirror}, decorate] (P-1-1.north west) -- (P-2-1.south west);
-    \draw[decoration={brace}, decorate] (P-1-2.north east) -- (P-2-2.south east);
-
-    \draw[decoration={brace, mirror}, decorate] (P-3-3.north west) -- (P-4-3.south west);
-    \draw[decoration={brace}, decorate] (P-3-4.north east) -- (P-4-4.south east);
-
-    \draw[decoration={brace, mirror}, decorate] (P-5-5.north west) -- (P-7-5.south west);
-    \draw[decoration={brace}, decorate] (P-5-7.north east) -- (P-7-7.south east);
-    \end{scope}
-\end{tikzpicture}
+\input{fig/pre-poisson-mat-P.tex}
 
 
 A major benefit of this preconditioner is that its inverse can be trivially applied in parallel. Unfortunately it isn't very useful for large $n$ as it doesn't significantly reduce the number of CG iterations.
@@ -204,60 +153,7 @@ If you want, think of $L=-\Delta$. We partition $\Omega$ as $\Omega=\Omega_1 \cu
 \end{equation*}
 where $n$ is the total number of discretization points.
 
-\begin{tikzpicture}
-\matrix
-[matrix of nodes,
-every node/.style={
-    fill,
-    red,
-    circle,
-    inner sep=0,
-    minimum size=5pt
-},
-row sep = 1em,
-column sep = 1em,
-]
-(Omega)
-{
-&&&&\ &\ &\ &\ \\
-&&&&\ &\ &\ &\ \\
-&&&&\ &\ &\ &\ \\
-&&&&\ &\ &\ &\ \\
-\ &\ &\ &\ &\ &\ &\ &\ \\
-\ &\ &\ &\ &\ &\ &\ &\ \\
-\ &\ &\ &\ &\ &\ &\ &\ \\
-\ &\ &\ &\ &\ &\ &\ &\ \\
-};
-
-\draw[line width=1.5mm, Green, opacity=.5]
-    ([xshift=-0.5em, yshift=-0.5em] Omega-8-5.south west)
-    rectangle
-    ([xshift= 0.5em, yshift= 0.5em] Omega-1-8.north east);
-
-\draw[line width=1.5mm, Magenta, opacity=.5]
-    ([xshift=-0.5em, yshift=-0.5em] Omega-8-1.south west)
-    rectangle
-    ([xshift= 0.5em, yshift= 0.5em] Omega-5-8.north east);
-
-\node[above=of Omega-5-2](){$\Omega$};
-\node[left=1em of Omega-7-1, fill=Magenta, opacity=0.5, text opacity=1, circle](){$\Omega_1$};
-\node[above=1em of Omega-1-7, fill=Green, opacity=0.5, text opacity=1, circle](){$\Omega_2$};
-
-\draw [thick]
-    ([xshift=-0.5em, yshift=-0.5em] Omega-8-1.south west)
-  --([xshift=-0.5em, yshift= 0.5em] Omega-5-1.north west)
-  --([xshift=-0.5em, yshift= 0.5em] Omega-5-5.north west)
-  --([xshift=-0.5em, yshift= 0.5em] Omega-1-5.north west)
-  --([xshift= 0.5em, yshift= 0.5em] Omega-1-8.north east)
-  --([xshift= 0.5em, yshift=-0.5em] Omega-8-8.south east)
-  --cycle;
-
-\draw[<-] (Omega-1-8) to[bend left=10] (3,2) node[right]{This point's index is in $I_2$};
-\draw[<-] (Omega-8-3) to[out=-90, in=200] (3,-2) node[right]{This point's index is in $I_1$};
-\draw[<-] (Omega-5-7) to[out=45, in=180] (3,0) node[right]{This point's index is in $I_1$ and $I_2$};
-
-
-\end{tikzpicture}
+\input{fig/pre-DD-labeled.tex}
 
 %% Lecture 36
 We can describe DD at the continuous level, or at the discretize level. To be applied at the discrete level, we require a restriction and prolongation operators. For each $I_i$, we define a $n \times n_i$ rectangular matrix $R_i^T$ such that
@@ -333,25 +229,7 @@ Then, the local subdomain matrices
     A_1 = R_1 A R_1^T, \qquad A_2 = R_2AR_2^T
 \end{equation*}
 
-\begin{tikzpicture}
-    \matrix[
-    matrix of math nodes,
-    nodes in empty cells,
-    left delimiter={[},
-    right delimiter={]},
-    ](A){
-    2&-1&&&&&\\
-    -1&2&-1&&&&\\
-    &-1&2&-1&&&\\
-    &&-1&2&-1&&\\
-    &&&-1&2&-1&\\
-    &&&&-1&2&-1\\
-    &&&&&-1&2\\
-    };
-    \node[left=.5em of A](){$A=$};
-    \node[font=\Huge]() at (A-2-6) {0};
-    \node[font=\Huge]() at (A-6-2) {0};
-\end{tikzpicture}
+\input{fig/pre-poisson-mat.tex}
 
 \begin{equation*}
     R_1AR_1^T =
@@ -417,17 +295,7 @@ Then, the local subdomain matrices
 The idea of DD is to solve discretizations of the PDE in each subdomain $\Omega_1$ and $\Omega_2$. However, since boundary conditions are required on the boundaries of $\Omega_1$ and $\Omega_2$, and part of these boundaries are in the interior of $\Omega$.
 
 \begin{center}
-\begin{tikzpicture}
-\draw[pattern=north west lines, pattern color=Green, dashed, draw=Green, ultra thick] (2,0) rectangle (4,4);
-\draw[pattern=north east lines, pattern color=Red, dashed, draw=Red, ultra thick] (0,0) rectangle (4,2);
-\draw[thick](0, 0) -- (0, 2) -- (2, 2) -- (2, 4) -- (4, 4) -- (4, 0) -- cycle;
-
-\node()at(1, 3){$\Omega$};
-\node[Green, fill=white, circle]()at(3, 3){$\Omega_2$};
-\node[Red, fill=white, circle]()at(1, 1){$\Omega_1$};
-\draw[->, thick] (1.5, -.5) node[anchor=north, Green]{$\Gamma_2$} to[bend left=30] (2, 0.5);
-\draw[->, thick] (4.5, 1.5) node[anchor=west, Red]{$\Gamma_1$} to[bend left=30] (3.5, 2);
-\end{tikzpicture}
+    \input{fig/pre-DD-shaded.tex}
 \end{center}
 
 Letting $\Gamma_1$ and $\Gamma_2$ be the boundaries of $\Omega_1$ and $\Omega_2$ that are in the interior of $\Omega$, the DD method starts with some $u^0$ and iterates by solving
@@ -451,16 +319,7 @@ Letting $\Gamma_1$ and $\Gamma_2$ be the boundaries of $\Omega_1$ and $\Omega_2$
 Note the notation
 
 \begin{center}
-
-\begin{tikzpicture}
-\draw[fill=Red] (0, 0) circle (1);
-\draw[fill=White] (1, 0) circle (1);
-\draw  (0, 0) circle (1);
-\node()at(0, 1.5){$A$};
-\node()at(1, 1.5){$B$};
-\node()at(.5, -1.5){$=A\setminus B$};
-\node[minimum size=5pt, fill=Red]()at(-0.5, -1.5){};
-\end{tikzpicture}
+    \input{fig/pre-venn.tex}
 \end{center}
 
 With some conditions on $L$ (coercivity), this iterative method converges in some norm to the exact solution. The convergence is geometric, meaning that
@@ -587,36 +446,7 @@ One solution is to use a two-scale DD method. That is, one grid size $h$ is used
 Given an elliptic PDE in $\mathbb{R}^2$, we construct subdomains as follows:
 
 \begin{center}
-\begin{tikzpicture}
-    \draw[dashed, red] (0, 0) grid (4,4);
-    \draw[Green] (0, 4) rectangle (1.2, 2.8);
-    \draw[Green] (1.8, 2.8) rectangle (3.2, 4);
-    \draw[Green] (0, 2.2) rectangle (1.2, 0.8);
-    \draw[Green] (1.8, 2.2) rectangle (3.2, 0.8);
-    \draw[thick] (0, 0) rectangle (4, 4);
-    \node[]() at (0.5, 3.5) {$\Omega_1$};
-    \node[]() at (2.5, 3.5) {$\Omega_3$};
-    \node[]() at (0.5, 1.5) {$\Omega_9$};
-    \node[]() at (2.5, 1.5) {$\Omega_{11}$};
-
-    \draw[thick, Magenta] (2.5, 2.8) -- (2.5, 3);
-
-    \draw[<-, shorten <=2pt, Magenta] (2.5, 2.9) to[bend left=25](4.8, 2)
-    node[below]{$\beta H$}
-    ;
-    \begin{scope}[xshift=5.5cm]
-    \draw[dashed, red] (0, 0) grid (4,4);
-    \draw[Green] (0.8, 4) rectangle (2.2, 2.8);
-    \draw[Green] (2.8, 4) rectangle (4, 2.8);
-    \draw[Green] (0.8, 2.2) rectangle (2.2, 0.8);
-    \draw[Green] (2.8, 2.2) rectangle (4, 0.8);
-    \draw[thick] (0, 0) rectangle (4, 4);
-    \node[]() at (1.5, 3.5) {$\Omega_2$};
-    \node[]() at (3.5, 3.5) {$\Omega_3$};
-    \node[]() at (1.5, 1.5) {$\Omega_{10}$};
-    \node[]() at (3.5, 1.5) {$\Omega_{12}$};
-    \end{scope}
-\end{tikzpicture}
+    \input{fig/pre-DD-in-R2.tex}
 \end{center}
 
 An additive Schwarz preconditioner is
@@ -636,3 +466,4 @@ and
     \text{cond}(M_{AS, 2}A) \leq C (1+\beta^{-1})
 \end{equation*}
 Where $C$ is independent of $h$ and $H$.
+

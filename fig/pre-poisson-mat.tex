@@ -1,0 +1,23 @@
+
+\begin{tikzpicture}
+    \matrix[
+    matrix of math nodes,
+    nodes in empty cells,
+    left delimiter={[},
+    right delimiter={]},
+    ](A){
+    2&-1&&&&&\\
+    -1&2&-1&&&&\\
+    &-1&2&-1&&&\\
+    &&-1&2&-1&&\\
+    &&&-1&2&-1&\\
+    &&&&-1&2&-1\\
+    &&&&&-1&2\\
+    };
+    \node[left=.5em of A](){$A=$};
+    \node[right=of A-1-7](){$I_1=\{1, 2\}$};
+    \node[right=of A-4-7](){$I_2=\{3, 4\}$};
+    \node[right=of A-7-7](){$I_3=\{5, 6, 7\}$};
+    \node[font=\Huge]() at (A-2-6) {0};
+    \node[font=\Huge]() at (A-6-2) {0};
+\end{tikzpicture}

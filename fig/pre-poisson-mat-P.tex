@@ -1,0 +1,32 @@
+
+\begin{tikzpicture}
+    \matrix[
+    matrix of nodes,
+    nodes in empty cells,
+    left delimiter={[},
+    right delimiter={]},
+    every node/.style={minimum size=1.5em, anchor=center}
+    ](P){
+    2&-1&&&&&\\
+    -1&2&&&&&\\
+    &&2&-1&&&\\
+    &&-1&2&&&\\
+    &&&&2&-1&0\\
+    &&&&-1&2&-1\\
+    &&&&0&-1&2\\
+    };
+    \node[left=.5em of P](){$\Rightarrow P = $};
+    \node[font=\Huge]() at (P-2-6) {0};
+    \node[font=\Huge]() at (P-6-2) {0};
+    \begin{scope}[red]
+
+    \draw[decoration={brace, mirror}, decorate] (P-1-1.north west) -- (P-2-1.south west);
+    \draw[decoration={brace}, decorate] (P-1-2.north east) -- (P-2-2.south east);
+
+    \draw[decoration={brace, mirror}, decorate] (P-3-3.north west) -- (P-4-3.south west);
+    \draw[decoration={brace}, decorate] (P-3-4.north east) -- (P-4-4.south east);
+
+    \draw[decoration={brace, mirror}, decorate] (P-5-5.north west) -- (P-7-5.south west);
+    \draw[decoration={brace}, decorate] (P-5-7.north east) -- (P-7-7.south east);
+    \end{scope}
+\end{tikzpicture}

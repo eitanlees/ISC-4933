@@ -1,0 +1,55 @@
+
+\begin{tikzpicture}
+\matrix
+[matrix of nodes,
+every node/.style={
+    fill,
+    red,
+    circle,
+    inner sep=0,
+    minimum size=5pt
+},
+row sep = 1em,
+column sep = 1em,
+]
+(Omega)
+{
+&&&&\ &\ &\ &\ \\
+&&&&\ &\ &\ &\ \\
+&&&&\ &\ &\ &\ \\
+&&&&\ &\ &\ &\ \\
+\ &\ &\ &\ &\ &\ &\ &\ \\
+\ &\ &\ &\ &\ &\ &\ &\ \\
+\ &\ &\ &\ &\ &\ &\ &\ \\
+\ &\ &\ &\ &\ &\ &\ &\ \\
+};
+
+\draw[line width=1.5mm, Green, opacity=.5]
+    ([xshift=-0.5em, yshift=-0.5em] Omega-8-5.south west)
+    rectangle
+    ([xshift= 0.5em, yshift= 0.5em] Omega-1-8.north east);
+
+\draw[line width=1.5mm, Magenta, opacity=.5]
+    ([xshift=-0.5em, yshift=-0.5em] Omega-8-1.south west)
+    rectangle
+    ([xshift= 0.5em, yshift= 0.5em] Omega-5-8.north east);
+
+\node[above=of Omega-5-2](){$\Omega$};
+\node[left=1em of Omega-7-1, fill=Magenta, opacity=0.5, text opacity=1, circle](){$\Omega_1$};
+\node[above=1em of Omega-1-7, fill=Green, opacity=0.5, text opacity=1, circle](){$\Omega_2$};
+
+\draw [thick]
+    ([xshift=-0.5em, yshift=-0.5em] Omega-8-1.south west)
+  --([xshift=-0.5em, yshift= 0.5em] Omega-5-1.north west)
+  --([xshift=-0.5em, yshift= 0.5em] Omega-5-5.north west)
+  --([xshift=-0.5em, yshift= 0.5em] Omega-1-5.north west)
+  --([xshift= 0.5em, yshift= 0.5em] Omega-1-8.north east)
+  --([xshift= 0.5em, yshift=-0.5em] Omega-8-8.south east)
+  --cycle;
+
+\draw[<-] (Omega-1-8) to[bend left=10] (3,2) node[right]{This point's index is in $I_2$};
+\draw[<-] (Omega-8-3) to[out=-90, in=200] (3,-2) node[right]{This point's index is in $I_1$};
+\draw[<-] (Omega-5-7) to[out=45, in=180] (3,0) node[right]{This point's index is in $I_1$ and $I_2$};
+
+
+\end{tikzpicture}
