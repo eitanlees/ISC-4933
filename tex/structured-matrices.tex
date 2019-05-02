@@ -17,6 +17,7 @@ A_{21} & A_{22} \\
 \end{equation*}
 and the off-diagonal blocks $A_{12}$ and $A_{21}$ are rank $k$ with $k\ll n$. Often this low-rank off-diagonal block structure can be applied recursively, and the new off-diagonal blocks are still rank $k$.
 
+\subsection{Recursive Off Diagonal Partitioning}
 Let's change the notation so that we can do recursive off-diagonal structured matrices. Define the index set $I_i = \{1, 2, \ldots, n\}$. We let $I_2$ and $I_3$ be the first and second halves of $I_1$. That is
 
 \begin{align*}
@@ -66,6 +67,7 @@ Applying the off-diagonal structure recursively,
     \input{fig/struct-mat-partition.tex}
 \end{center}
 
+\subsection{Operations with Partitioned Matrices}
 If we need to compute $A\vec{x}$, this can be done as follows
 \begin{center}
     \input{fig/struct-mat-large-matvec.tex}
@@ -436,7 +438,11 @@ Given $\sigma(\vec{x}_1), \ldots, \sigma(\vec{x}_N)$, the half corresponding to 
     \sum_{j\in I_3} K(\vec{x}_i, \vec{x}_j)\sigma(\vec{x}_j) \qquad  \forall \quad i \in I_2
 \end{equation*}
 
-For these kernel matries, the rank of the blocks is independent of, or nearly independent of, the problem size $N$. However, requiring a unique SVD for each off-diagonal block is too restrictive to develop efficient methods to construct $A^{-1}$. A more efficient partitioning is a \emph{hierarchical semi-seperable} (HSS) decomposition
+For these kernel matries, the rank of the blocks is independent of, or nearly independent of, the problem size $N$. However, requiring a unique SVD for each off-diagonal block is too restrictive to develop efficient methods to construct $A^{-1}$. 
+
+\subsection{Hierarchical Semi-Separable Decomposition}
+
+A more efficient partitioning is a \emph{hierarchical semi-separable} (HSS) decomposition
 
 \begin{equation*}
     A = \begin{bmatrix}
