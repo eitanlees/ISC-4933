@@ -26,7 +26,7 @@ dot/.style={circle, inner sep=0pt, minimum size=3pt, fill=black}
         \clip (0, 0) rectangle (5, 5);
         \pgfmathsetseed{7}
         \foreach \i in {1, ..., 20}
-           \pgfmathsetmacro{\x}{(5*random())}
+           \pgfmathsetmacro{\x}{(5*rand)}
            \pgfmathsetmacro{\y}{5-(\x + 0.5*rand)}
             \node[dot] () at (\x, \y) {};
         \end{scope}
