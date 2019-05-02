@@ -1,0 +1,28 @@
+
+\begin{tikzpicture}[]
+
+    \draw (0, -1) -- (0, 1.5);
+    \draw (-0.2, 0) -- (8, 0);
+
+    \foreach \x in {1, 4, 4.5, 6, 7}{
+        \draw[xshift=\x cm] (0, -0.1) -- (0, 0.1) ;
+    };
+
+    \foreach \x in {5.9, 5.95, ..., 6.1}{
+        \draw[xshift=\x cm] (0, -0.1) -- (0, 0.1) ;
+    };
+
+    \draw[yshift=1cm, rotate=90] (0, -0.1)  -- (0, 0.1) ;
+
+    \draw[<->, red, thick]
+    (0, 1) to
+    (1, 0) to[bend right = 45]
+    (4, 0) to[bend left = 45]
+    (4.5, 0) to[bend right = 45]
+    (6, 0) to[bend left = 45]
+    (7, 0) to (8, -1) node[right]{$P_5(z)$}
+    ;
+
+    \draw[OliveGreen, shorten >=5pt, ->] (5, 1.2) node[left, text width = 3cm, align=right]{Amount error is reduced by.} to[bend left=10] (6, 0);
+
+\end{tikzpicture}

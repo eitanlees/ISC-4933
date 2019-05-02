@@ -1,0 +1,15 @@
+
+\begin{tikzpicture}[domain=0:8, yscale=2]
+    \draw (0, -1) -- (0, 1.5);
+    \draw (-0.2, 0) -- (8, 0);
+
+    \draw[xshift=2cm] (0, -0.1) node[below] {2} -- (0, 0.1) ;
+    \draw[xshift=7cm] (0, -0.1) node[below] {7} -- (0, 0.1);
+    \draw[yshift=1cm, rotate=90] (0, -0.1)  -- (0, 0.1) node[left] {1};
+
+    \draw[thick, red, <->] plot(\x, {1-(2*\x/9)});
+
+    \draw[OliveGreen, decoration={brace}, decorate, thick] (2, 0) -- node[left]{$P_1(2)=\frac{5}{9}$} (2, {5/9});
+    \draw[OliveGreen, decoration={brace, raise=2pt}, decorate, thick] (7, 0) --
+    node[right=3pt]{$P_1(7)=\frac{-5}{9}$} (7, {-5/9});
+\end{tikzpicture}

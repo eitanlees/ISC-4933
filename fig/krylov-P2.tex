@@ -1,0 +1,14 @@
+\begin{tikzpicture}[domain=0:8, yscale=2]
+    \draw (0, -1) -- (0, 1.5);
+    \draw (-0.2, 0) -- (8, 0);
+
+    \draw[xshift=2cm] (0, -0.1) node[below] {2} -- (0, 0.1) ;
+    \draw[xshift=7cm] (0, -0.1) node[below] {7} -- (0, 0.1);
+    \draw[yshift=1cm, rotate=90] (0, -0.1)  -- (0, 0.1) node[left] {1};
+
+    \draw[thick, red, <->] plot(\x, {((\x-2)*(\x-7))/14});
+
+    \draw[<-, shorten <=5pt, OliveGreen ] (2, 0) to[bend right=10] (3, 0.5) node[above]{$P_2(2) = 0$};
+    \draw[<-, shorten <=5pt, OliveGreen ] (7, 0) to[bend left=10] (6, 0.5) node[above]{$P_2(7) = 0$};
+\end{tikzpicture}
+

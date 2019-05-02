@@ -17,6 +17,8 @@ At the $m$\textsuperscript{th} iterate of a Krylov method, it seeks the best sol
 
 Varients of these methods are preconditioned versions (pCG, pGMRES), Biconjugate Gradient method (BiCG), and Biconjugate Gradient Stabilized method (BiCGSTAB).
 
+We will begin our discussion of Krylov methods by exploring the Conjugate Gradient method. Much of these notes come from the paper by \cite{shewchuk-1994} , where a deeper analysis is provided.
+
 \subsection*{Making $A\vec{x}=\vec{b}$ a Minimization Problem}
 
 Suppose $A$ is symmetric ($A=A^T$) and positive definite:
@@ -88,27 +90,7 @@ Therefore, given a current iterate $\vec{x}^{\,(i)}$, the new iterate should be
 where $\vec{r}^{\,(i)} = \vec{b} - A\vec{x}^{\,(i)}$ is the residual, and $\alpha^{(i)}\in\mathbb{R}^{+}$ is the step size. To find the optimal $\alpha^{(i)}$, we optimize $f\left(\vec{x}^{\,(i+1)}\right)$. This is a line search and the role of $\alpha^{(i)}$. If $n=2$, we can draw that is happening
 
 \begin{center}
-    \begin{tikzpicture}
-        \foreach \size in {1, 1.75, ..., 4} {
-            \draw[OliveGreen, scale=\size, rotate=30] (0,0) ellipse (1cm and .5cm);
-        };
-        \node[circle, inner sep=0, minimum size=5pt,fill, label={$\vec{x}$}]() at (0,0){};
-
-        \draw[<->] (-2, -3) -- (-2, 2);
-        \draw[<->] (-3, -2) -- (2, -2);
-
-        \node[ red, circle, inner sep=0, minimum size=5pt, fill,
-        label={[red, xshift=5mm, yshift=-1mm]$\vec{x}^{\,(i)}$}
-        ] () at (-1.5, -1.6){};
-
-        \draw[<->, red, ultra thick] (-1.5, -3) -- (-1.5, 2);
-
-        \draw[<-, thick] (-1.5, -2.2) to[bend right=30] (0, -2.5) node[right] () {Minimize along this line.};
-
-        \draw[<-, thick] (-.5, 2) to[bend right=30] (-3, 3) node[left, xshift=5mm, text width=2cm] () {Contour lines of $f$.};
-
-        \draw[->, thick, red] (2, -1) -- (2.3, -1.3) node[right](){$\nabla f$};
-    \end{tikzpicture}
+    \input{fig/krylov-contour-with-labels.tex}
 \end{center}
 
 To find the optimal $\alpha^{(i)}$, we optimize
@@ -154,26 +136,8 @@ Therefore, the optimal $\alpha^{(i)}$ satisfies
 
 That is, $\alpha^{(i)}$ should be chosen to that $\vec{r}^{\,(i)}$ is orthogonal to $\nabla f\left(\vec{x}^{\,(i+1)}\right)$
 
-
 \begin{center}
-    \begin{tikzpicture}
-        \foreach \size in {1, 1.75, ..., 4} {
-            \draw[OliveGreen, scale=\size, rotate=30] (0,0) ellipse (1cm and .5cm);
-        };
-        \node[circle, inner sep=0, minimum size=5pt,fill, label={30:$\vec{x}$}]() at (0,0){};
-
-
-        \node[ red, circle, inner sep=0, minimum size=5pt, fill,
-        label={[red, xshift=5mm, yshift=-1mm]$\vec{x}^{\,(i)}$}
-        ] () at (-1.5, -1.6){};
-
-        \draw[<->, red, ultra thick] (-1.5, -3) -- (-1.5, 2);
-
-        \draw[->,>=latex, VioletRed, ultra thick] (-1.5, -.6) -- (-2.4, -.6);
-        \draw[->,>=latex, VioletRed, ultra thick] (-1.5, -1) -- (-2, -1.5);
-        \draw[->,>=latex, VioletRed, ultra thick] (-1.5, 0) -- (-2, .5);
-        \draw[VioletRed, thick] (-1.7, -.6) |- (-1.5, -.4);
-    \end{tikzpicture}
+    \input{fig//krylov-contour-line-search.tex}
 \end{center}
 
 To find this value of $\alpha$, since $\nabla f\left(\vec{x}^{\,(i+1)}\right)=-\vec{r}^{\,(i+1)}$, we need $\vec{r}^{\,(i+1)} \cdot \vec{r}^{\,(i)}=0$
@@ -224,23 +188,9 @@ By choosing the optimal $\alpha^{(i)}$, we have that consecutive search directio
 
 
 \begin{center}
-    \begin{tikzpicture}
-        \foreach \size in {1, 1.75, ..., 4} {
-            \draw[OliveGreen, scale=\size, rotate=30] (0,0) ellipse (1cm and .5cm);
-        };
-        \node[circle, inner sep=0, minimum size=5pt,fill, label={30:$\vec{x}$}]() at (0,0){};
-
-        \node[ red, circle, inner sep=0, minimum size=5pt, fill,
-        label={[red, xshift=5mm, yshift=-1mm]$\vec{x}^{\,(i)}$}
-        ] () at (-1.5, -1.6){};
-
-        \draw[->, red, ultra thick] (-1.5, -1.6) -- (-1.5, -.6);
-        \draw[->, red, ultra thick] (-1.5, -0.6) -- (-0.5, -0.6);
-        \draw[->, red, ultra thick] (-0.5, -0.6) -- (-0.5, 0);
-        \draw[->, red, ultra thick] (-0.5, 0) -- (0, 0);
-
-    \end{tikzpicture}
+    \input{fig/krylov-contour-zig-zag.tex}
 \end{center}
+
 
 
 We define the error at iteration $i$ to be
@@ -282,27 +232,7 @@ Steepest descent has a major issue. The search direction at differenet iteration
 
 
 \begin{center}
-    \begin{tikzpicture}
-        \foreach \size in {1, 1.75, ..., 4} {
-            \draw[OliveGreen, scale=\size, rotate=30] (0,0) ellipse (1cm and .5cm);
-        };
-        % \node[circle, inner sep=0, minimum size=5pt,fill, label={30:$\vec{x}$}]() at (0,0){};
-        \node[circle, inner sep=0, minimum size=5pt,fill, label={[yshift=2mm]-30:$\vec{x}$}]() at (0,0){};
-
-        \draw[<->, thick, red] (3, 1.9) -- (-3, -1.9);
-        \draw[<->, thick, red] (-3, 1) -- (-.5, -3);
-
-        \node[red, circle, inner sep=0, minimum size=5pt,fill] () at (-1.12, -2){};
-        \node[red, circle, inner sep=0, minimum size=5pt,fill] () at (-1.72, -1.1){};
-        \draw[thick, red] (-1.85, -0.8) -- (-1.65, -0.67) -- (-1.52, -0.92);
-
-        \draw[<-, shorten <=3pt, red] (-1.12, -2) to[bend left=10] (0, -2) node[right] () {$\vec{x}^{\,(i)}$};
-        \draw[<-, shorten <=3pt, red] (-1.72, -1.1) to[bend right=10] (-1.72, -2.5) node[below] () {$\vec{x}^{\,(i+1)}$};
-        \draw[<-, shorten <=3pt, red] (-1.72, -1.1) to[bend right=10] (-1.72, -2.5) node[below] () {$\vec{x}^{\,(i+1)}$};
-        \draw[<-, shorten <=3pt, red] (-2.4, .1) to[bend right=10] (-2.5, 1.5) node[above] () {$\vec{d}^{\,(i)}$};
-        \draw[<-, red] (2.2, 1.5) to[bend right=10] (0, 3) node[above] () {$\vec{d}^{\,(i+1)}$};
-
-    \end{tikzpicture}
+    \input{fig/krylov-contour-CG.tex}
 \end{center}
 
 
@@ -517,86 +447,21 @@ Suppose $A\in \mathcal{R}^{2\times2}$ has eigenvalues at $\lambda=2$ and $\lambd
 
 $P_0(x) = 1$
 
-\begin{tikzpicture}[domain=0:8, yscale=2]
-    \draw (0, -1) -- (0, 1.5);
-    \draw (-0.2, 0) -- (8, 0);
-
-    \draw[xshift=2cm] (0, -0.1) node[below] {2} -- (0, 0.1) ;
-    \draw[xshift=7cm] (0, -0.1) node[below] {7} -- (0, 0.1);
-    \draw[yshift=1cm, rotate=90] (0, -0.1)  -- (0, 0.1) node[left] {1};
-
-    \draw[thick, red, <->] plot(\x, 1);
-
-    \draw[OliveGreen, decoration={brace, mirror}, decorate, thick] (2, 0) -- node[right]{$P_0(2)=1$} (2, 1);
-    \draw[OliveGreen, decoration={brace, mirror}, decorate, thick] (7, 0) -- node[right]{$P_0(7)=1$}
-    (7, 1);
-\end{tikzpicture}
+\input{fig/krylov-P0.tex}
 
 $P_1(x) = 1 - \frac{2x}{9}$
 
-\begin{tikzpicture}[domain=0:8, yscale=2]
-    \draw (0, -1) -- (0, 1.5);
-    \draw (-0.2, 0) -- (8, 0);
-
-    \draw[xshift=2cm] (0, -0.1) node[below] {2} -- (0, 0.1) ;
-    \draw[xshift=7cm] (0, -0.1) node[below] {7} -- (0, 0.1);
-    \draw[yshift=1cm, rotate=90] (0, -0.1)  -- (0, 0.1) node[left] {1};
-
-    \draw[thick, red, <->] plot(\x, {1-(2*\x/9)});
-
-    \draw[OliveGreen, decoration={brace}, decorate, thick] (2, 0) -- node[left]{$P_1(2)=\frac{5}{9}$} (2, {5/9});
-    \draw[OliveGreen, decoration={brace, raise=2pt}, decorate, thick] (7, 0) --
-    node[right=3pt]{$P_1(7)=\frac{-5}{9}$} (7, {-5/9});
-\end{tikzpicture}
+\input{fig/krylov-P1.tex}
 
 
 $P_2(x) = \frac{(x-1)(x-7)}{14}$
 
-\begin{tikzpicture}[domain=0:8, yscale=2]
-    \draw (0, -1) -- (0, 1.5);
-    \draw (-0.2, 0) -- (8, 0);
-
-    \draw[xshift=2cm] (0, -0.1) node[below] {2} -- (0, 0.1) ;
-    \draw[xshift=7cm] (0, -0.1) node[below] {7} -- (0, 0.1);
-    \draw[yshift=1cm, rotate=90] (0, -0.1)  -- (0, 0.1) node[left] {1};
-
-    \draw[thick, red, <->] plot(\x, {((\x-2)*(\x-7))/14});
-
-    \draw[<-, shorten <=5pt, OliveGreen ] (2, 0) to[bend right=10] (3, 0.5) node[above]{$P_2(2) = 0$};
-    \draw[<-, shorten <=5pt, OliveGreen ] (7, 0) to[bend left=10] (6, 0.5) node[above]{$P_2(7) = 0$};
-\end{tikzpicture}
+\input{fig/krylov-P2.tex}
 
 The number of CG iterations is reduced if it has multiple eigenvalues at the same location. What is also beneficial, and much more common, is the eigenvalues cluster at some location.
 
 \begin{center}
-
-\begin{tikzpicture}[]
-
-    \draw (0, -1) -- (0, 1.5);
-    \draw (-0.2, 0) -- (8, 0);
-
-    \foreach \x in {1, 4, 4.5, 6, 7}{
-        \draw[xshift=\x cm] (0, -0.1) -- (0, 0.1) ;
-    };
-
-    \foreach \x in {5.9, 5.95, ..., 6.1}{
-        \draw[xshift=\x cm] (0, -0.1) -- (0, 0.1) ;
-    };
-
-    \draw[yshift=1cm, rotate=90] (0, -0.1)  -- (0, 0.1) ;
-
-    \draw[<->, red, thick]
-    (0, 1) to
-    (1, 0) to[bend right = 45]
-    (4, 0) to[bend left = 45]
-    (4.5, 0) to[bend right = 45]
-    (6, 0) to[bend left = 45]
-    (7, 0) to (8, -1) node[right]{$P_5(z)$}
-    ;
-
-    \draw[OliveGreen, shorten >=5pt, ->] (5, 1.2) node[left, text width = 3cm, align=right]{Amount error is reduced by.} to[bend left=10] (6, 0);
-
-\end{tikzpicture}
+    \input{fig/krylov-P5.tex}
 \end{center}
 
 In a general case where $A$ has a largest eigenvalue $\lambda_{\max}$ and a smallest eigenvalue $\lambda_{\min}$, and the other eigenvalues are more or less evenly distributed in $[\lambda_{\min}, \lambda_{\max}]$
