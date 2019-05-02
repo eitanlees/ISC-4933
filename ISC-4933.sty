@@ -2,6 +2,13 @@
 
 % Unicode encoding
 \usepackage[utf8]{inputenc}
+\usepackage[english]{babel}
+ 
+% Bibliography configuration
+\usepackage[
+citestyle=authortitle
+]{biblatex}
+\addbibresource{ISC-4933.bib}
 
 % Better color names
 \usepackage[dvipsnames]{xcolor}
@@ -15,6 +22,8 @@
 \usepackage{amsmath}
 \usepackage{amssymb}
 
+% Code highlighting
+\usepackage{listings}
 
 \usepackage{pgfplots}
 \pgfplotsset{compat=1.5}
@@ -27,7 +36,11 @@
 \usetikzlibrary{
     arrows,
     matrix,
-    positioning
+    positioning,
+    patterns,
+    backgrounds,
+    hobby, 
+    decorations.pathreplacing,
 }
 
 
@@ -43,10 +56,7 @@
         line width=1pt,
         line cap=round,
         dash pattern=on 0pt off 5pt
-    }
-}
-
-\tikzset{
+    },
     bmatrix/.style={
       matrix of math nodes,
       nodes in empty cells,
@@ -54,18 +64,47 @@
       left delimiter={[} ,
       inner sep=0,
       nodes={inner sep=.3333em},
-    }
-}
-
-\tikzset{
+    },
+    U matrix/.style = {
+            matrix of nodes,
+            left delimiter = {[},
+            right delimiter= {]},
+            row sep = 1mm,
+            column sep=1mm,
+            every node/.style={
+                draw,
+                minimum height=5mm
+                }
+            },
+    B matrix/.style = {
+            matrix of nodes,
+            left delimiter = {[},
+            right delimiter= {]},
+            row sep = 1mm,
+            column sep=1mm,
+            every node/.style={
+                draw,
+                }
+            },
+    V matrix/.style = {
+            matrix of nodes,
+            left delimiter = {[},
+            right delimiter= {]},
+            row sep = 1mm,
+            column sep=1mm,
+            every node/.style={
+                draw,
+                minimum width =5mm
+                }
+            },
     stamp/.style={
-  circle,
-  draw=red!80,
-  inner sep=0pt,
-  minimum size=12pt,
-  xshift=0em,
-  yshift=.3em,
-  scale=.8
+            circle,
+            draw=red!80,
+            inner sep=0pt,
+            minimum size=12pt,
+            xshift=0em,
+            yshift=.3em,
+            scale=.8
     }
 }
 

@@ -1,0 +1,20 @@
+\begin{tikzpicture}
+    \draw (0, 0) node[left]{\phantom{$\quad \Omega^{h}$}} -- (8, 0) node[right]{$\quad \Omega^{h}$};
+    \draw[line width = 1pt] (0, .5em) -- (0, -.5em) node[below] {0} ;
+    \draw[line width = 1pt] (8, .5em) -- (8, -.5em) node[below] {1} ;
+    \foreach \x in {1, ..., 7}
+        \draw[shift={(\x, 0)}] (0, .5em) -- (0, -.5em);
+
+    \draw (0, -8em) node[right]{\phantom{$\quad \Omega^{2h}$}}-- (8, -8em) node[right]{$\quad \Omega^{2h}$};
+    \draw[line width = 1pt] (0, -7.5em) -- (0, -8.5em) node[below] {0} ;
+    \draw[line width = 1pt] (8, -7.5em) -- (8, -8.5em) node[below] {1} ;
+    \foreach \x in {2, 4, 6}
+        \draw[shift={(\x, 0)}] (0, -7.5em) -- (0, -8.5em);
+    
+    {\color{red}
+    \foreach \x in {2, 4, 6}
+        \draw[->, line width=1pt] (\x, -1.5em) -- (\x, -6.5em)
+        node[midway, left]{1}
+        ;
+    }
+\end{tikzpicture}

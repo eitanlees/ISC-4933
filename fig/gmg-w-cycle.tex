@@ -1,0 +1,26 @@
+\begin{tikzpicture}[scale=1.25]
+\draw (0, 0) -- (-.5em, 0) node[anchor=east, yshift=.2em]{$\Omega^{\,h}$};
+\foreach[count=\i] \x in {2, 4, 8}
+\draw[shift={(0, -\i)}] (0, 0) -- (-.5em, 0)  node[anchor=east, yshift=.2em]{$\Omega^{\,\x h}$};
+
+\def\dx{0.5};
+
+\def\cycle{0, 1, 2, 3, 2, 3, 2, 1, 2, 3, 2, 3, 2, 1, 0};
+
+\foreach[count=\step, evaluate=\step as \x using \step*\dx] \level in \cycle
+    \node[circle,fill=black,inner sep=0em,minimum size=.5em] 
+    (\step) at (\x, -\level) {};
+    
+\foreach \level [count=\step, remember=\step-1 as \prestep] in \cycle
+    \ifnum\step>1  \path (\prestep) edge (\step) \fi;
+    
+    {\color{C3}
+    \draw[thick, dashed] (3)++(-0.25, 0.25)  rectangle ++(2.5, -1.5);
+    \node[yshift=-2cm] () at (5) {2 V-cycles};
+    }
+    
+    {\color{C2}
+    \draw[thick, dashed] (2)++(-0.25, 0.25)  rectangle ++(6.5, -3.3);
+    \node[yshift=-4.25cm] () at (8) {2 V-cycles};
+    }
+\end{tikzpicture}

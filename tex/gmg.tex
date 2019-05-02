@@ -1,6 +1,11 @@
 %% Lecture 06
 \section{Geometric Multigrid}
 
+A popular iterative method for numerically solving differential equations
+is knows as the \emph{Multigrid Method}. We build up to the method by first
+exploring a variety of simpler methods. Many of the notes from this section are
+from the book by \cite{briggs-2000}. 
+
 \subsection{Finite Difference for Elliptic PDEs}
 
 Consider the BVP
@@ -670,66 +675,20 @@ is considered to be low frequency if $n=16$, but it is high frequency is $n=8$.
 There fore we only need a method to solve $A\vec{u}=h^2\vec{f}$ at multiple
 resolutions. That is, on multiple grids.
 
+\subsection{Two-Grid Multigrid}
+
 Some new notation we need is $\Omega = (0, 1)$ and $\Omega^h$ is the grid formed
 by dividing $\Omega$ into intervals of size $h$
 
 \begin{center}
-\begin{tikzpicture}
-    \draw (0, 0) -- (8, 0);
-  \draw (0, 0) node[left] {\phantom{$\quad \Omega^{1/4} \quad n=3$}}
-  -- (8, 0) node[right] {\phantom{$\quad \Omega^{1/4} \quad n=3$}};
-    \draw[line width = 1pt] (0, .5em) -- (0, -.5em) node[below] {0} ;
-    \draw[line width = 1pt] (8, .5em) -- (8, -.5em) node[below] {1} ;
-    {\color{red}
-    \foreach \x in {1, 2, 3, 4}
-    \draw[shift={(\x, 0)}] (0, .5em) -- (0, -.5em);
-    \foreach \x in {6, 7}
-    \draw[shift={(\x, 0)}] (0, .5em) -- (0, -.5em);
-    \draw[<->] (2,1em) -- (3, 1em) node[midway, fill=white] {$h$};
-    \draw[<->] (6,1em) -- (7, 1em) node[midway, fill=white] {$h$};
-    \node at (5, -1em) {\ldots};
-    }
-\end{tikzpicture}
+    \input{fig/gmg-interval.tex}
 \end{center}
 
 We choose $h$ to be of the form $h=1/(n+1)$ for some $n$ that is a power of 2
 minus 1. 
 
 \begin{center}
-%% 1/2 grid
-\begin{tikzpicture}
-  \draw (0, 0) node[left] {\phantom{$\quad \Omega^{1/2} \quad n=1$}}
-  -- (8, 0) node[right] {$\quad \Omega^{1/2} \quad n=1$};
-    \draw[line width = 1pt] (0, .5em) -- (0, -.5em) node[below] {0} ;
-    \draw[line width = 1pt] (8, .5em) -- (8, -.5em) node[below] {1} ;
-    \draw[shift={(4, 0)}] (0, .5em) -- (0, -.5em) node[below] {1/2};
-\end{tikzpicture}
-
-%% 1/4 grid
-\begin{tikzpicture}
-  \draw (0, 0) node[left] {\phantom{$\quad \Omega^{1/4} \quad n=3$}}
-  -- (8, 0) node[right] {$\quad \Omega^{1/4} \quad n=3$};
-    \draw[line width = 1pt] (0, .5em) -- (0, -.5em) node[below] {0} ;
-    \draw[line width = 1pt] (8, .5em) -- (8, -.5em) node[below] {1} ;
-    \foreach \x in {2, 4, 6}
-    \draw[shift={(\x, 0)}] (0, .5em) -- (0, -.5em);
-    \node at (2, -1.5em) {1/4};
-    \node at (4, -1.5em) {1/2};
-    \node at (6, -1.5em) {3/4};
-\end{tikzpicture}
-
-\begin{tikzpicture}
-  \draw (0, 0) node[left] {\phantom{$\quad \Omega^{1/8} \quad n=7$}}
-  -- (8, 0) node[right] {$\quad \Omega^{1/8} \quad n=7$};
-    \draw[line width = 1pt] (0, .5em) -- (0, -.5em) node[below] {0} ;
-    \draw[line width = 1pt] (8, .5em) -- (8, -.5em) node[below] {1} ;
-    \foreach[count=\i] \x in {1, ..., 7}
-    \draw[shift={(\x, 0)}] (0, .5em) -- (0, -.5em) node[below]{$x_{\i}$};
-    \node at (4, -2em) {$\vdots$};
-    \node at (8.8, -2em) {$\vdots$};
-    \node at (10,  -2em) {$\vdots$};
-\end{tikzpicture}
-
+    \input{fig/gmg-increasing-interval.tex}
 \end{center}
 $A^h$ is the linear system at the grid resolution of $\Omega^h$. For us $A^h \in
 \mathbb{R}^{n\times n}$
@@ -767,6 +726,7 @@ include the $1/h^2$ term so that we are solving
   A^h\vec{u}^{\,h} = \vec{f}^{\,h}
 \end{equation*}
 
+\pagebreak
 
 %% Lecture 11
 A two-grid multigrid iteration works as follows. Start with an initial guess $\vec{v}^{\,h}$
@@ -814,26 +774,7 @@ There are several choices for the restriction operator. The easiest is
 v_j^{2h} = v_{2j}^h \qquad j=1, 2, \ldots
 \end{equation*}
 \begin{center}
-\begin{tikzpicture}
-    \draw (0, 0) node[left]{\phantom{$\quad \Omega^{h}$}} -- (8, 0) node[right]{$\quad \Omega^{h}$};
-    \draw[line width = 1pt] (0, .5em) -- (0, -.5em) node[below] {0} ;
-    \draw[line width = 1pt] (8, .5em) -- (8, -.5em) node[below] {1} ;
-    \foreach \x in {1, ..., 7}
-        \draw[shift={(\x, 0)}] (0, .5em) -- (0, -.5em);
-
-    \draw (0, -8em) node[right]{\phantom{$\quad \Omega^{2h}$}}-- (8, -8em) node[right]{$\quad \Omega^{2h}$};
-    \draw[line width = 1pt] (0, -7.5em) -- (0, -8.5em) node[below] {0} ;
-    \draw[line width = 1pt] (8, -7.5em) -- (8, -8.5em) node[below] {1} ;
-    \foreach \x in {2, 4, 6}
-        \draw[shift={(\x, 0)}] (0, -7.5em) -- (0, -8.5em);
-    
-    {\color{red}
-    \foreach \x in {2, 4, 6}
-        \draw[->, line width=1pt] (\x, -1.5em) -- (\x, -6.5em)
-        node[midway, left]{1}
-        ;
-    }
-\end{tikzpicture}
+    \input{fig/gmg-interjection.tex}
 \end{center}
 
 
@@ -845,149 +786,14 @@ v_j^{2h} =  \frac{1}{4}\left(  v_{2j-1}^h + 2v_{2j}^h +v_{2j+1}^h \right)
 
 
 \begin{center}
-\begin{tikzpicture}
-    \draw (0, 0) node[left]{\phantom{$\quad \Omega^{h}$}} -- (8, 0) node[right]{$\quad \Omega^{h}$};
-    \draw[line width = 1pt] (0, .5em) -- (0, -.5em) node[below] {} ;
-    \draw[line width = 1pt] (8, .5em) -- (8, -.5em) node[below] {} ;
-    \foreach \x in {1, ..., 7}
-        \draw[shift={(\x, 0)}] (0, .5em) -- (0, -.5em);
-
-    \draw (0, -8em) node[right]{\phantom{$\quad \Omega^{2h}$}}-- (8, -8em) node[right]{$\quad \Omega^{2h}$};
-    \draw[line width = 1pt] (0, -7.5em) -- (0, -8.5em) node[below] {} ;
-    \draw[line width = 1pt] (8, -7.5em) -- (8, -8.5em) node[below] {} ;
-    \foreach \x in {2, 4, 6}
-        \draw[shift={(\x, 0)}] (0, -7.5em) -- (0, -8.5em);
-    
-    {
-    \color{red}
-    %% n = 1
-    \draw[->, line width=1pt] 
-    (1, -1.5em) 
-    -- 
-    (1.8, -6.7em) node[midway, left]{1/4} ;
-    \draw[->, line width=1pt] 
-    (2, -1.5em) node[left]{1/2} 
-    -- 
-    (2, -6.5em)
-    ;
-    \draw[->, line width=1pt] 
-    (3, -1.5em) node[left, yshift=-1em, xshift=-.4em]{1/4} 
-    -- 
-    (2.2, -6.7em)  ;
-    
-    %% n = 4
-    \draw[->, line width=1pt] 
-    (3, -1.5em) 
-    -- 
-    (3.8, -6.7em) node[midway, left, yshift=-1em, xshift=.4em]{1/4} ;
-    \draw[->, line width=1pt] 
-    (4, -1.5em) node[left]{1/2} 
-    -- 
-    (4, -6.5em)
-    ;
-    \draw[->, line width=1pt] 
-    (5, -1.5em) node[left, yshift=-1em, xshift=-.4em]{1/4} 
-    -- 
-    (4.2, -6.7em)  ;
-    
-    %% n = 6
-    \draw[->, line width=1pt] 
-    (5, -1.5em) 
-    -- 
-    (5.8, -6.7em) node[midway, left, yshift=-1em, xshift=.4em]{1/4} ;
-    \draw[->, line width=1pt] 
-    (6, -1.5em) node[left]{1/2} 
-    -- 
-    (6, -6.5em)
-    ;
-    \draw[->, line width=1pt] 
-    (7, -1.5em) node[left, yshift=-1em, xshift=-.4em]{1/4} 
-    -- 
-    (6.2, -6.7em)  ;
-    }
-\end{tikzpicture}
+    \input{fig/gmg-full-weighting.tex}
 \end{center}
 
 
 For prolongation, we typically use a linear interpolant at the new grid points 
 
 \begin{center}
-
-\begin{tikzpicture}
-    \draw (0, -8em) node[right]{\phantom{$\quad \Omega^{h}$}}-- (8, -8em) node[right]{$\quad \Omega^{h}$};
-    \draw[line width = 1pt] (0, .5em) -- (0, -.5em) node[below] {} ;
-    \draw[line width = 1pt] (8, .5em) -- (8, -.5em) node[below] {} ;
-    \foreach \x in {2, 4, 6}
-        \draw[shift={(\x, 0)}] (0, .5em) -- (0, -.5em);
-
-    \draw (0, 0) node[left]{\phantom{$\quad \Omega^{2h}$}} -- (8, 0) node[right]{$\quad \Omega^{2h}$};
-    \draw[line width = 1pt] (0, -7.5em) -- (0, -8.5em) node[below] {} ;
-    \draw[line width = 1pt] (8, -7.5em) -- (8, -8.5em) node[below] {} ;
-    \foreach \x in {1, ..., 7}
-        \draw[shift={(\x, 0)}] (0, -7.5em) -- (0, -8.5em);
-    
-    {
-    \color{red}
-    %% n = 1
-    
-    \draw[->, line width=1pt] 
-    (0, -1.5em) 
-    -- 
-    (0.8, -6.7em) node[midway, left]{1/2} ;
-    \draw[->, line width=1pt] 
-    (2, -1.5em) 
-    -- 
-    (1.2, -6.7em)node[midway,left]{1/2} 
-    ;
-    \draw[->, line width=1pt] 
-    (2, -1.5em)  
-    -- 
-    (2, -6.7em) node[left, yshift=1.5em]{1} ;
-    \draw[->, line width=1pt] 
-    (2, -1.5em)  
-    -- 
-    (2.8, -6.7em) node[left, yshift=.9em, xshift=-.3em]{1/2} ;
-    
-    \draw[->, line width=1pt] 
-    (4, -1.5em) 
-    -- 
-    (3.2, -6.7em)node[midway,left]{1/2} 
-    ;
-    \draw[->, line width=1pt] 
-    (4, -1.5em)  
-    -- 
-    (4, -6.7em) node[left, yshift=1.5em]{1} ;
-    \draw[->, line width=1pt] 
-    (4, -1.5em)  
-    -- 
-    (4.8, -6.7em) node[left, yshift=.9em, xshift=-.3em]{1/2} ;
-    
-    \draw[->, line width=1pt] 
-    (6, -1.5em) 
-    -- 
-    (5.2, -6.7em)node[midway,left]{1/2} 
-    ;
-    \draw[->, line width=1pt] 
-    (6, -1.5em)  
-    -- 
-    (6, -6.7em) node[left, yshift=1.5em]{1} ;
-    \draw[->, line width=1pt] 
-    (6, -1.5em)  
-    -- 
-    (6.8, -6.7em) node[left, yshift=.9em, xshift=-.3em]{1/2} ;
-    \draw[->, line width=1pt] 
-    (8, -1.5em) 
-    -- 
-    (7.2, -6.7em)node[midway,left]{1/2} 
-    ;
-    }
-    {
-    \color{OliveGreen}
-    \node[text width=4cm,align=center] (text) at (4, -12em) {These terms do not contribute because of the boundary conditions};
-    \draw[->, line width=1pt] (text.west) to[out=180, in=-100] (0.4, -6em);
-    \draw[->, line width=1pt] (text.east) to[out=0, in=-45] (7.4, -6em);
-    }
-\end{tikzpicture}
+    \input{fig/gmg-prolongation.tex}
 \end{center}
 
 We introduce the following notation
@@ -1082,7 +888,11 @@ However, doing Gaussian eliminations to $A^h\vec{u} = \vec{f}^{\,h}$ requires
 $\bigO{n^3}$ operations. Therefore, if not too many two-grid cycles are required,
 our two-grid algorithm can out perform Gaussian elimination.
 
+\pagebreak
+
+\subsection{Recursive Multigrid}
 Regarding option c), we note that we are solving
+
 \begin{equation*}
 A^{2h}\vec{e}^{\,2h} = \vec{r}^{\,2h}
 \end{equation*}
@@ -1149,87 +959,7 @@ of$A^h\vec{u} = \vec{f}^{\,h}$. We can visualize the algorithm as follows.
 
 
 \begin{center}
-    \begin{tikzpicture}[scale=0.8]
-  \draw[white] (-8.5,9)--(8.5,9)--(8.5,-1.2)--(-8.5,-1.2)--cycle;
-    \node[circle, fill=blue, inner sep=4pt,minimum size=2pt,line
-    width=0pt] at (-4,8) {};
-
-    \node at (-6.1,8) {\footnotesize $\vec{v}^h = 
-      \mathcal{S}^{\nu_1}(v^h,\vec{f}^h)$};
-
-    \draw[black!40,line width=5pt,->]
-    (-3.8,7.6)--(-3.2,6.4);
-    \node[red] at (-6.0,7.0) {\footnotesize $\vec{f}^{2h} = 
-      I^{2h}_{h}(\vec{f}^h - A^h \vec{v}^h)$};
-    \node[circle, fill=blue, inner sep=4pt,minimum size=2pt,line
-    width=0pt] at (-3,6) {};
-
-    \node at (-6,6) {\footnotesize $\vec{v}^{2h} = \vec{0}$;\quad $\vec{v}^{2h} = 
-      \mathcal{S}^{\nu_1}(v^{2h},\vec{f}^{2h})$};
-
-    \draw[black!40,line width=5pt,->]
-    (-2.8,5.6)--(-2.2,4.4);
-    \node[red] at (-5.3,5.0) {\footnotesize $\vec{f}^{4h} = 
-      I^{4h}_{2h}(\vec{f}^{2h} - A^{2h} \vec{v}^{2h})$};
-    \node[circle, fill=blue, inner sep=4pt,minimum size=2pt,line
-    width=0pt] at (-2,4) {};
-
-    \node at (-5,4) {\footnotesize $\vec{v}^{4h} = \vec{0}$;\quad $\vec{v}^{4h} = 
-      \mathcal{S}^{\nu_1}(v^{4h},\vec{f}^{4h})$};
-
-    \draw[black!40,line width=5pt,->]
-    (-1.8,3.6)--(-1.2,2.4);
-    \node[red] at (-4.3,3.0) {\footnotesize $\vec{f}^{8h} = 
-      I^{8h}_{4h}(\vec{f}^{4h} - A^{4h} \vec{v}^{4h})$};
-    \node[circle, fill=blue, inner sep=4pt,minimum size=2pt,line
-    width=0pt] at (-1,2) {};
-
-    \node at (-4,2) {\footnotesize $\vec{v}^{8h} = \vec{0}$;\quad $\vec{v}^{8h} = 
-      \mathcal{S}^{\nu_1}(v^{8h},\vec{f}^{8h})$};
-
-    \draw[black!40,line width=5pt,->,dashed]
-    (-0.8,1.6)--(-0.2,0.4);
-    \node[circle, fill=blue, inner sep=4pt,minimum size=2pt,line
-    width=0pt] at (0,0) {};
-
-    \node[magenta] at (0,-0.7) {\footnotesize $\vec{v}^{Lh} = 
-      \left(A^{Lh}\right)^{-1} \vec{f}^{\,Lh}$};
-
-    \draw[black!40,line width=5pt,->,dashed] (0.2,0.4)--(0.8,1.6);
-    \node[circle, fill=blue, inner sep=4pt,minimum size=2pt,line
-    width=0pt] at (1,2) {};
-
-    \node at (3.5,2) {\footnotesize $\vec{v}^{8h} = 
-      \mathcal{S}^{\nu_2}(v^{8h},\vec{f}^{8h})$};
-
-    \draw[black!40,line width=5pt,->] (1.2,2.4)--(1.8,3.6);
-    \node[red] at (4.3,3.0) {\footnotesize $\vec{v}^{4h} = 
-      \vec{v}^{4h} + I^{4h}_{8h}(\vec{v}^{8h})$};
-    \node[circle, fill=blue, inner sep=4pt,minimum size=2pt,line
-    width=0pt] at (2,4) {};
-
-    \node at (4.5,4) {\footnotesize $\vec{v}^{4h} = 
-      \mathcal{S}^{\nu_2}(v^{4h},\vec{f}^{4h})$};
-
-    \draw[black!40,line width=5pt,->] (2.2,4.4)--(2.8,5.6);
-    \node[red] at (5.3,5.0) {\footnotesize $\vec{v}^{2h} = 
-      \vec{v}^{2h} + I^{2h}_{4h}(\vec{v}^{4h})$};
-    \node[circle, fill=blue, inner sep=4pt,minimum size=2pt,line
-    width=0pt] at (3,6) {};
-
-    \node at (5.5,6) {\footnotesize $\vec{v}^{2h} = 
-      \mathcal{S}^{\nu_2}(v^{2h},\vec{f}^{2h})$};
-
-    \draw[black!40,line width=5pt,->] (3.2,6.4)--(3.8,7.6);
-    \node[red] at (6.2,7.0) {\footnotesize $\vec{v}^{h} = 
-      \vec{v}^{h} + I^{h}_{2h}(\vec{v}^{2h})$};
-    \node[circle, fill=blue, inner sep=4pt,minimum size=2pt,line
-    width=0pt] at (4,8) {};
-
-    \node at (6.5,8) {\footnotesize $\vec{v}^{h} = 
-      \mathcal{S}^{\nu_2}(v^{h},\vec{f}^{h})$};
-
-  \end{tikzpicture}
+    \input{fig/gmg-v-cycle.tex}
 \end{center}
 
 Because of the shape of this picture we call the algorithm $\vec{v}^{\,h}
@@ -1331,63 +1061,19 @@ With this coice for $L$, the smoothing and residual operations cost $\bigO{n}$
 flops and the 
 coarse-grid solve requires $\bigO{1}$ operations.
 
+\subsection{Multigrid Cycles}
 The V-cycle recursively performs one V-cycle per level. Alternatively, we could
 apply $\mu \in \mathbb{N}$ V-cycles per level. If $\mu=2$, the result is a
 W-cycle. The schedule of the grids are as follows. 
 
 \begin{center}
-
-\begin{tikzpicture}[scale=1.25]
-\draw (0, 0) -- (-.5em, 0) node[anchor=east, yshift=.2em]{$\Omega^{\,h}$};
-\foreach[count=\i] \x in {2, 4, 8}
-\draw[shift={(0, -\i)}] (0, 0) -- (-.5em, 0)  node[anchor=east, yshift=.2em]{$\Omega^{\,\x h}$};
-
-\def\dx{0.5};
-
-\def\cycle{0, 1, 2, 3, 2, 3, 2, 1, 2, 3, 2, 3, 2, 1, 0};
-
-\foreach[count=\step, evaluate=\step as \x using \step*\dx] \level in \cycle
-    \node[circle,fill=black,inner sep=0em,minimum size=.5em] 
-    (\step) at (\x, -\level) {};
-    
-\foreach \level [count=\step, remember=\step-1 as \prestep] in \cycle
-    \ifnum\step>1  \path (\prestep) edge (\step) \fi;
-    
-    {\color{C3}
-    \draw[thick, dashed] (3)++(-0.25, 0.25)  rectangle ++(2.5, -1.5);
-    \node[yshift=-2cm] () at (5) {2 V-cycles};
-    }
-    
-    {\color{C2}
-    \draw[thick, dashed] (2)++(-0.25, 0.25)  rectangle ++(6.5, -3.3);
-    \node[yshift=-4.25cm] () at (8) {2 V-cycles};
-    }
-\end{tikzpicture}
+    \input{fig/gmg-w-cycle.tex}
 \end{center}
 
 If we add another level the W-cycle would look like
 
 \begin{center}
-\begin{tikzpicture}[scale=1.25]
-\draw (0, 0) -- (-.5em, 0) node[ anchor=east,  yshift=.2em ]{$\Omega^{\,h}$};
-\foreach[count=\i] \x in {2, 4, 8, 16}
-\draw[shift={(0, -\i)}] (0, 0) -- (-.5em, 0)  node[ anchor=east,  yshift=.2em]{$\Omega^{\,\x h}$};
-
-\def\dx{0.3};
-
-\def\cycle{
-0, 1, 2, 3, 4, 3, 4, 3, 2, 3, 4, 3,4, 3, 2, 1, 2, 3, 4, 3, 4, 3, 2, 3, 4, 3, 4, 3,  2, 1, 0
-};
-
-\foreach[count=\step, evaluate=\step as \x using \step*\dx] \level in \cycle
-    \node[circle,fill=black,inner sep=0em,minimum size=.5em] 
-    (\step) at (\x, -\level) {};
-    
-\foreach \level [count=\step, remember=\step-1 as \prestep] in \cycle
-    \ifnum\step>1  \path (\prestep) edge (\step) \fi;
-    
-\end{tikzpicture}
-
+    \input{fig/gmg-mu-3-cycle.tex}
 \end{center}
 
 %% Lecture 14
@@ -1421,46 +1107,7 @@ prolong once, perform a V-cycle, and repeat until we're at the finest grid. We
 then perform out standard V-cycle.
 
 \hspace{-1cm} 
-\begin{tikzpicture}[node distance=.3cm]
-\draw (0, 0) -- (-.5em, 0) node[ anchor=east,  yshift=.2em ]{$\Omega^{\,h}$};
-\foreach[count=\i] \x in {2, 4, 8, 16}
-\draw[shift={(0, -\i)}] (0, 0) -- (-.5em, 0)  node[ anchor=east,  yshift=.2em]{$\Omega^{\,\x h}$};
-
-\def\dx{0.5};
-
-\def\cycle{
-4, 3, 4, 3, 2, 3, 4, 3, 2, 1, 2, 3, 4, 3, 2, 1, 0, 1, 2, 3, 4, 3, 2, 1, 0
-};
-
-\foreach[count=\step, evaluate=\step as \x using \step*\dx] \level in \cycle
-    \node[circle,fill=black,inner sep=0em,minimum size=.5em] 
-    (step\step) at (\x, -\level) {};
-    
-\foreach \level [count=\step, remember=\step-1 as \prestep] in \cycle
-    \ifnum\step>1  \path (step\prestep) edge (step\step) \fi;
-
-{
-\color{red}
-\path (step1)+(0, 3mm) -- node[left] {$\mathcal{I}^{8h}_{16h}$}  (step2);
-\node [below right =  4mm and -.5 of step1), anchor=west] () {Solve $A^{16h} \vec{u}^{\,16h} = \vec{f}^{\,16h}$};
-
-\path (step2) edge[<->] node[above](){\scriptsize 1 V-cycle}(step4);
-\node[above left = of step5](){$\mathcal{I}^{4h}_{8h}$} edge[->] (2.2, -2.5) ;
-
-\path (step5) edge[<->] node[above](){\scriptsize 1 V-cycle}(step9);
-\node[above left = of step10](){$\mathcal{I}^{2h}_{4h}$} edge[->] (4.65, -1.5) ;
-
-
-\path (step10) edge[<->] node[above](){\scriptsize 1 V-cycle} (step16);
-\node[left = of step17](){$\mathcal{I}^{h}_{2h}$} edge[->] (8.2, -.5) ;
-
-\path (step17) edge[<->] node[above](){\scriptsize 1 V-cycle} (step25);
-
-
-}
-
-
-\end{tikzpicture}
+\input{fig/gmg-full-multigrid.tex}
 
 Some generalizations are
 \begin{enumerate}[1)]
@@ -1469,6 +1116,7 @@ Some generalizations are
 \item Do more than 1 V-cycle or W-cycle when forming the initial guess. 
 \end{enumerate}
 
+\subsection{Multigrid in $\mathbb{R}^2$}
 Multigrid is not very practical for solving
 \begin{align*}
   u^{''} &= f \qquad  x\in (0, 1) \\
@@ -1496,39 +1144,9 @@ The linear system to solve
 \end{equation*}
 Where $\Delta x=\Delta y=h=\frac{1}{n+1}$ and $U_{i,j}\approx u(x_i, y_j)$ with $x_i=ih,\,y_j=jh$
 
-\begin{tikzpicture}[scale=3]
-
-\draw[ultra thick] (0, 0) rectangle (1, 1);
-
-\node[label=left:0, label=below:0] at (0, 0){};
-\node[label=left:1] at (0, 1){};
-\node[label=below:1] at (1, 0){};
-
-\foreach \x in {0, 0.16, ..., 0.5}
-\foreach \y in {0, 0.16, ..., 0.4}
-\node[fill, circle, inner sep = 0pt, minimum size=3pt, red] at (\x, \y) {};
-
-\foreach \y in {0, 0.16, ..., 0.4}
-\node[fill, circle, inner sep = 0pt, minimum size=3pt, red] at (1, \y) {};
-
-\foreach \y in {1, 0.84, ..., 0.77}
-\node[fill, circle, inner sep = 0pt, minimum size=3pt, red] at (1, \y) {};
-
-\foreach \y in {0, 0.16, ..., 0.4}
-\node[inner sep = 0pt, minimum size=3pt, red] at (.75, \y) {\ldots};
-
-\foreach \y in {1, 0.84, ..., 0.77}
-\node[inner sep = 0pt, minimum size=3pt, red] at (.75, \y) {\ldots};
-
-\foreach \y in {1, 0.84, ..., 0.77}
-\foreach \x in {0, 0.16, ..., 0.5}
-\node[fill, circle, inner sep = 0pt, minimum size=3pt, red] at (\x, \y) {};
-
-\node[red] at (.25, .6) {$\vdots$};
-
-
-\end{tikzpicture}
-
+\begin{center}
+    \input{fig/gmg-2d-domain.tex}
+\end{center}
 Note that we have removed the boundary points from the linear system. We use a
 lexicographic ordering of $U_{i, j}$
 
@@ -1708,59 +1326,5 @@ $\omega$ is $\omega=4/5$.
 In addition to a smoother, we require a prolongation and restriction operators.
 
 \begin{center}
-
-\begin{tikzpicture}[scale=1,
-little label/.style={
-xshift=-4mm, yshift=4mm,
-color=C2
-}
-]
-\begin{scope}
-\draw[ultra thick] (0, 0) grid (4, 4);
-\foreach \x in {1, 2, 3}
-\foreach \y in {1, 2, 3}
-\node[circle, red, fill] (n-\x-\y) at (\x, \y) {};
-
-\node[draw=black,circle, ultra thick] () at (n-2-2) {};
-
-\node[above = of n-2-3] () {Restriction};
-
-\node[little label] at (n-1-3){$\frac{1}{16}$};
-\node[little label] at (n-2-3){$\frac{1}{8}$};
-\node[little label] at (n-3-3){$\frac{1}{16}$};
-
-\node[little label] at (n-1-2){$\frac{1}{8}$};
-\node[little label, ] at (n-2-2){$\frac{1}{4}$};
-\node[little label] at (n-3-2){$\frac{1}{8}$};
-
-\node[little label] at (n-1-1){$\frac{1}{16}$};
-\node[little label] at (n-2-1){$\frac{1}{8}$};
-\node[little label] at (n-3-1){$\frac{1}{16}$};
-\node[below = of n-2-1] () {Full Weighting};
-\end{scope}
-
-\begin{scope}[xshift=6cm]
-\draw[ultra thick] (0, 0) grid (4, 4);
-\foreach \x in {1, 2, 3}
-\foreach \y in {1, 2, 3}
-\node[circle, red, fill] (n-\x-\y) at (\x, \y) {};
-\node[above = of n-2-3] () {Prolongation};
-\node[little label] at (n-1-3){$\frac{1}{4}$};
-\node[little label, xshift=8mm] at (n-2-3){$\frac{1}{4}$};
-\node[little label, xshift=8mm, yshift=-8mm] at (n-2-2){$\frac{1}{4}$};
-\node[little label, yshift=-8mm] at (n-1-2){$\frac{1}{4}$};
-
-
-\draw[red,thick, dashed] (1.5cm, 0) -- (1.5cm, 4cm);
-\draw[red,thick, dashed] (0cm, 2.5cm) -- (4cm, 2.5cm);
-\node[draw=black, fill=red,circle, ultra thick] () at (1.5cm, 2.5cm) {};
-
-\node [fill=red, circle, draw=black, ultra thick] at (3cm , 1.5cm) {};
-\node[little label, xshift=8mm, yshift=-8mm] at (n-3-1){$\frac{1}{2}$};
-\node[little label, xshift=8mm, yshift=-8mm] at (n-3-2){$\frac{1}{2}$};
-
-\node[below=of n-2-1](){Bilinear interpolation};
-\end{scope}
-
-\end{tikzpicture}
+    \input{fig/gmg-2d-restriction-prolongation.tex}
 \end{center}

@@ -1,0 +1,30 @@
+\begin{tikzpicture}[scale=3]
+
+\draw[ultra thick] (0, 0) rectangle (1, 1);
+
+\node[label=left:0, label=below:0] at (0, 0){};
+\node[label=left:1] at (0, 1){};
+\node[label=below:1] at (1, 0){};
+
+\foreach \x in {0, 0.16, ..., 0.5}
+\foreach \y in {0, 0.16, ..., 0.4}
+\node[fill, circle, inner sep = 0pt, minimum size=3pt, red] at (\x, \y) {};
+
+\foreach \y in {0, 0.16, ..., 0.4}
+\node[fill, circle, inner sep = 0pt, minimum size=3pt, red] at (1, \y) {};
+
+\foreach \y in {1, 0.84, ..., 0.77}
+\node[fill, circle, inner sep = 0pt, minimum size=3pt, red] at (1, \y) {};
+
+\foreach \y in {0, 0.16, ..., 0.4}
+\node[inner sep = 0pt, minimum size=3pt, red] at (.75, \y) {\ldots};
+
+\foreach \y in {1, 0.84, ..., 0.77}
+\node[inner sep = 0pt, minimum size=3pt, red] at (.75, \y) {\ldots};
+
+\foreach \y in {1, 0.84, ..., 0.77}
+\foreach \x in {0, 0.16, ..., 0.5}
+\node[fill, circle, inner sep = 0pt, minimum size=3pt, red] at (\x, \y) {};
+
+\node[red] at (.25, .6) {$\vdots$};
+\end{tikzpicture}

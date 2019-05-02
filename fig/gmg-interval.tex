@@ -1,0 +1,16 @@
+\begin{tikzpicture}
+    \draw (0, 0) -- (8, 0);
+  \draw (0, 0) node[left] {\phantom{$\quad \Omega^{1/4} \quad n=3$}}
+  -- (8, 0) node[right] {\phantom{$\quad \Omega^{1/4} \quad n=3$}};
+    \draw[line width = 1pt] (0, .5em) -- (0, -.5em) node[below] {0} ;
+    \draw[line width = 1pt] (8, .5em) -- (8, -.5em) node[below] {1} ;
+    {\color{red}
+    \foreach \x in {1, 2, 3, 4}
+    \draw[shift={(\x, 0)}] (0, .5em) -- (0, -.5em);
+    \foreach \x in {6, 7}
+    \draw[shift={(\x, 0)}] (0, .5em) -- (0, -.5em);
+    \draw[<->] (2,1em) -- (3, 1em) node[midway, fill=white] {$h$};
+    \draw[<->] (6,1em) -- (7, 1em) node[midway, fill=white] {$h$};
+    \node at (5, -1em) {\ldots};
+    }
+\end{tikzpicture}

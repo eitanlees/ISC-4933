@@ -1,0 +1,40 @@
+\begin{tikzpicture}[node distance=.3cm]
+\draw (0, 0) -- (-.5em, 0) node[ anchor=east,  yshift=.2em ]{$\Omega^{\,h}$};
+\foreach[count=\i] \x in {2, 4, 8, 16}
+\draw[shift={(0, -\i)}] (0, 0) -- (-.5em, 0)  node[ anchor=east,  yshift=.2em]{$\Omega^{\,\x h}$};
+
+\def\dx{0.5};
+
+\def\cycle{
+4, 3, 4, 3, 2, 3, 4, 3, 2, 1, 2, 3, 4, 3, 2, 1, 0, 1, 2, 3, 4, 3, 2, 1, 0
+};
+
+\foreach[count=\step, evaluate=\step as \x using \step*\dx] \level in \cycle
+    \node[circle,fill=black,inner sep=0em,minimum size=.5em] 
+    (step\step) at (\x, -\level) {};
+    
+\foreach \level [count=\step, remember=\step-1 as \prestep] in \cycle
+    \ifnum\step>1  \path (step\prestep) edge (step\step) \fi;
+
+{
+\color{red}
+\path (step1)+(0, 3mm) -- node[left] {$\mathcal{I}^{8h}_{16h}$}  (step2);
+\node [below right =  4mm and -.5 of step1), anchor=west] () {Solve $A^{16h} \vec{u}^{\,16h} = \vec{f}^{\,16h}$};
+
+\path (step2) edge[<->] node[above](){\scriptsize 1 V-cycle}(step4);
+\node[above left = of step5](){$\mathcal{I}^{4h}_{8h}$} edge[->] (2.2, -2.5) ;
+
+\path (step5) edge[<->] node[above](){\scriptsize 1 V-cycle}(step9);
+\node[above left = of step10](){$\mathcal{I}^{2h}_{4h}$} edge[->] (4.65, -1.5) ;
+
+
+\path (step10) edge[<->] node[above](){\scriptsize 1 V-cycle} (step16);
+\node[left = of step17](){$\mathcal{I}^{h}_{2h}$} edge[->] (8.2, -.5) ;
+
+\path (step17) edge[<->] node[above](){\scriptsize 1 V-cycle} (step25);
+
+
+}
+
+
+\end{tikzpicture}
