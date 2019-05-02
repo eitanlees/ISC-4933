@@ -10,6 +10,11 @@ tmp/
 # I don't want to include these
 *.swp
 
+# For this project specifically I want to 
+# ignore document output. In general some pdf
+# files might be used for images or figures
+ISC-4933.pdf
+
 #-------------------
 
 ## Core latex/pdflatex auxiliary files:
