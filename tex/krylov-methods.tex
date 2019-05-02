@@ -19,7 +19,7 @@ Varients of these methods are preconditioned versions (pCG, pGMRES), Biconjugate
 
 We will begin our discussion of Krylov methods by exploring the Conjugate Gradient method. Much of these notes come from the paper by \cite{shewchuk-1994} , where a deeper analysis is provided.
 
-\subsection*{Making $A\vec{x}=\vec{b}$ a Minimization Problem}
+\subsection{Making $A\vec{x}=\vec{b}$ a Minimization Problem}
 
 Suppose $A$ is symmetric ($A=A^T$) and positive definite:
 
@@ -63,7 +63,7 @@ We have that
 That is, the solution of $A \vec{x} = \vec{b}$ is at the (local) minimum of $f$. Therefore, if we can minimize $f$, we have solved $A \vec{x} = \vec{b}$.
 
 
-\subsection*{Method of Steepest Decent and Line Search}
+\subsection{Method of Steepest Decent and Line Search}
 Imagine you are in a high-dimensional bowl and your goal is to reach the bottom as fast as possible. Moreover, you can not see the bottom and can only see what is happening in a small region around you.
 
 At each step (iteration), we have 2 choices
@@ -226,7 +226,7 @@ In general, we have
     &= || \vec{e}^{\,(0)} ||_A \left(\frac{\kappa-1}{\kappa+1}\right)^i
 \end{align*}
 
-\section*{A better choice for the search direction}
+\subsection{A better choice for the search direction}
 
 Steepest descent has a major issue. The search direction at differenet iterations are often very similar. It would be nice if we went exactly the correct amount in that direction so that we find the solution by the $n$\textsuperscript{th} iterate.
 
@@ -416,7 +416,7 @@ We finally can define CG.
 
 %% Lecture 33
 
-\section*{Convergence}
+\subsection{Convergence}
 CG, and other Kylov methods, are gauranteed to converge in $n$ iterations. However, it is especially useful if it converges in $m$ iterations
 
 \begin{enumerate}[1)]

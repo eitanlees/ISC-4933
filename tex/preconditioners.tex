@@ -90,7 +90,7 @@ some number of pre and post smoothing steps.
 
 \end{enumerate}
 
-\section*{Domain Decomposition}
+\subsection{Domain Decomposition}
 
 Here, we will focus on preconditioners for solving a standard second-order discritization of the elliptic PDE
 
@@ -140,6 +140,7 @@ with
 
 A major benefit of this preconditioner is that its inverse can be trivially applied in parallel. Unfortunately it isn't very useful for large $n$ as it doesn't significantly reduce the number of CG iterations.
 
+\subsubsection{Discretization Coupling}
 The problem is that elliptic PDEs, like the one we are solving, couple all points $\vec{x}\in\Omega$. That is if $f$ is changed in some small region of $\Omega$, the $u$ changes everywhere in $\Omega$. However, if $f(x_i)$ is changed, only part of $\left(P^{-1}\vec{f}\right)$ will change. For discretizations of elliptic PDEs, it is important that the preconditioner couples all of the discretization points. One way to do this coupling is with DD. Let's write our PDE as
 
 \begin{align*}
@@ -331,7 +332,8 @@ where $\rho<1$ depends on the choice of $\Omega_1$ and $\Omega_2$
 
 %% Lecture 37
 
-This DD method cna be written in another form by using the residual. We will do this for 2 index sets partitioning $\{ 1, \ldots, n \}$ with overlap. At iteration $k$, the residual is
+\subsubsection{Additive and Multiplicative Schwarz}
+This DD method can be written in another form by using the residual. We will do this for 2 index sets partitioning $\{ 1, \ldots, n \}$ with overlap. At iteration $k$, the residual is
 
 \begin{equation*}
     \vec{r}^{\, k} = \vec{f} - A\vec{x}^{\, k}
@@ -439,9 +441,17 @@ Which is simply a preconditioned version of $A\vec{x} = \vec{f}$ with the precon
 
 %% Lecture 38
 
-A problem with DD as presented is that it's convergence slows down when we have more than 2 processors (i.e.\ 2 subdomains). The reason is that not all the domains are talking to one another. As is, only neighboring domains communicate.
+A problem with DD as presented is that it's convergence slows down when we have
+more than 2 processors (i.e.\ 2 subdomains). The reason is that not all the
+domains are talking to one another. As is, only neighboring domains
+communicate.
 
-One solution is to use a two-scale DD method. That is, one grid size $h$ is used to solve problems on subdomains, and another grid with grid size $H$ couples the subdomains. This gives us 2 more parameters, the grid sizes, that play a role in the multi-level DD method.
+\subsubsection{Two-Scale Domain Decomposition}
+
+One solution is to use a two-scale DD method. That is, one grid size $h$ is
+used to solve problems on subdomains, and another grid with grid size $H$
+couples the subdomains. This gives us 2 more parameters, the grid sizes, that
+play a role in the multi-level DD method.
 
 Given an elliptic PDE in $\mathbb{R}^2$, we construct subdomains as follows:
 
