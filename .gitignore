@@ -1,4 +1,4 @@
-## Eitan's additions
+# Eitan's additions
 #
 # I have set up my latexmk/pdflatex commands
 #  to create and store all generated files in a tmp 
@@ -15,7 +15,10 @@ tmp/
 # files might be used for images or figures
 ISC-4933.pdf
 
-#-------------------
+# General git ignore file for tex projects
+# -------------------------------------------------------------
+# https://github.com/github/gitignore/blob/master/TeX.gitignore
+# -------------------------------------------------------------
 
 ## Core latex/pdflatex auxiliary files:
 *.aux
