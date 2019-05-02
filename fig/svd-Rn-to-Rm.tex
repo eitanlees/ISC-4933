@@ -1,0 +1,41 @@
+\begin{tikzpicture}[
+dot/.style={circle, inner sep=0pt, minimum size=3pt, fill=black}
+]
+    \begin{scope}
+        \draw (0, 0) rectangle (5, 5);
+        \node () at (2.5, 5.5) {$\mathbb{R}^{n}$};
+        \node[dot, label=above left:$\Vec{x}$] (x) at (1.5, 4) {};
+        \node[dot, label=below left:$\Vec{0}$] (x) at (2.5, 2.5) {};
+
+        \node (rm) at (5, 2.5) {};
+
+        \pgfmathsetseed{1}
+        \foreach \i in {1, ..., 20}
+           \pgfmathsetmacro{\x}{5*rnd}
+           \pgfmathsetmacro{\y}{5*rnd}
+            \node[dot] () at (\x, \y) {};
+    \end{scope}
+
+    \begin{scope}[xshift=7cm]
+        \draw (0, 0) rectangle (5, 5);
+        \node () at (2.5, 5.5) {$\mathbb{R}^{m}$};
+        \node[dot, label=above right:$A\Vec{x}$] (x) at (1.2, 4) {};
+        \node[dot, label=below left:$\Vec{0}$] (x) at (2.5, 2.5) {};
+        \node (rn) at (0, 2.5) {};
+        \begin{scope}
+        \clip (0, 0) rectangle (5, 5);
+        \pgfmathsetseed{7}
+        \foreach \i in {1, ..., 20}
+           \pgfmathsetmacro{\x}{(5*random())}
+           \pgfmathsetmacro{\y}{5-(\x + 0.5*rand)}
+            \node[dot] () at (\x, \y) {};
+        \end{scope}
+        \draw[red, dashed] (0, 5) -- (5, 0);
+
+       \node[red, text width=3cm, anchor=south, yshift=.5cm] (text) at (5, 5) {low-dimentional subspace of the action/image of $A$} ;
+
+       \draw[thick, red, ->] (text) to [bend right=10](2.2, 2.8);
+    \end{scope}
+
+    \draw[->](rm) to[bend left] node[above]{$A$} (rn);
+\end{tikzpicture}

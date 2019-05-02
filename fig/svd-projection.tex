@@ -1,0 +1,16 @@
+\begin{tikzpicture}[ point/.style={circle, fill=black, inner sep=0pt, minimum size=5pt} ]
+    \draw[xslant=.2] (0, 0) rectangle (3, 3);
+    \node[point, red] (x) at (2.5,3.5) {};
+    \node[point] (zero) at (1,1.5) {};
+    \node[fill=white, node distance=.1mm, below = of zero, xshift=-2mm] () {$\vec{0}$};
+    \node[red, fill=white, right = .1em of x] () {$\vec{x}\in \mathbb{R}^m$};
+    \begin{scope}[red, thick]
+    \draw[dashed, thin] (zero) -- (zero)-|node[point, red](p){}(x)  -- (x);
+    \draw[->] (zero) -- (x);
+    \draw[->] (zero) -- (p);
+    \node[] (QQT) at (2, -0.5) {$QQ^T\vec{x} \in \mathbb{R}^{m}$};
+    \draw[->] (QQT) to[bend right =10] (p);
+    \end{scope}
+    \node[text width=3cm, anchor=west] (span) at (3.5, 1.5) {$\text{span}\{\vec{q_1}, \ldots, \vec{q}_k\} =\text{range}(Q)$};
+    \draw[->] (span) to[bend right=10] (3, 2.5);
+\end{tikzpicture}
