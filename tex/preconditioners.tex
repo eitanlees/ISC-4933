@@ -1,0 +1,14 @@
+\section{Preconditioners}
+
+Let $A$ be s.p.d.\ and suppose we are solving $A\vec{x}=\vec{b}$. Suppose we have some matrix $P$ with $P\approx A$. Then, the preconditioned linear system is
+
+\begin{equation*}
+    P^{-1}A\vec{x} = P^{-1}\vec{b},
+\end{equation*}
+where $P$ is called the preconditioner. There are two properties that are required of a good preconditioner
+
+\begin{enumerate}[1)]
+    \item $P^{-1}$ can be applied efficiently.
+    \item $P\approx A$ or $P^{-1}A\approx I$
+\end{enumerate}
+
