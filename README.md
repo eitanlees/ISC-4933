@@ -10,16 +10,19 @@ interpolative decomposition, randomized algorithms, and low-rank factorizations.
 
 ## Compilation
 
-I compiled this document using `latexmk` as follows
-
+To compile run:
 ```
-mkdir -p tmp; latexmk -pdf -outdir=tmp ISC-4933.tex
+make
 ```
 
 Note compilation time might be longer than usual because the document contains the source code for 
 all of the figures.
 
-All the generated files should be in the `tmp` directory including the pdf. 
+To remove all generated files run
+```
+make clean
+```
+
 
 ## License
 [![Creative Commons License](https://i.creativecommons.org/l/by-sa/4.0/88x31.png)](http://creativecommons.org/licenses/by-sa/4.0/)
