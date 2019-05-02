@@ -1,0 +1,27 @@
+
+\begin{tikzpicture}[
+blob/.style={use Hobby shortcut, closed=true},
+point/.style={circle, minimum size=2mm, inner sep=0pt, fill}
+]
+    \draw[blob] (0, 0) node {} ..
+    (.8, -1.5) ..
+    (3, -1) ..
+    (6, -2.5) ..
+    (8, -1) ..
+    (6, 1.5) ..
+    (5, 1) ..
+    (4, .8) ..
+    (3, 1.5) ..
+    (1.2, 1.5)
+    ;
+
+    \draw[->, red, thick, font=\Large] (8, 2) node[fill=white](){$\Gamma_3$} -- (7.28, 1.28);
+    \draw[->, red, thick, font=\Large] (0.5, 2.5) node[fill=white](){$\Gamma_2$} -- (1.2, 1.5);
+    \draw[red, ultra thick](4.1, 0.6) -- (4.2, .9);
+    \draw[red, ultra thick](3.4, -1.2) -- (3.5, -0.9);
+    \draw[<-, thick, color=OliveGreen] (.5, .75) to[bend right=20] (7.8, .5);
+    \draw[->, thick, color=OliveGreen] (3, -1) to[bend right=20] (3.5, 1.);
+    \node[OliveGreen]() at (6, -1) {$A_{23}$};
+    \draw [OliveGreen, ->] (4, -2) node[fill=white]{$A_{45}$} to[bend right=10] (3.75, -.5);
+
+\end{tikzpicture}

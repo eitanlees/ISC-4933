@@ -1,0 +1,16 @@
+
+\begin{tikzpicture}[shorten >=1pt,
+    edge from parent/.style={draw,-latex},
+    level 1/.style={sibling distance=2cm},
+    level 2/.style={sibling distance=1cm}]
+    \node(){$\Gamma_1$}
+    child { node{$\Gamma_2$}
+        child {node{$\Gamma_4$}}
+        child {node{$\Gamma_5$}}
+    }
+    child { node{$\Gamma_3$}
+        child {node{$\Gamma_6$}}
+        child {node{$\Gamma_7$}}
+    }
+    ;
+\end{tikzpicture}

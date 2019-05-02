@@ -1,0 +1,74 @@
+    \begin{tikzpicture}[
+every left delimiter/.style={xshift=2mm},
+every right delimiter/.style={xshift=-2mm},
+    ]
+
+\node(e){=};
+
+\matrix[
+right = 0.25 em of e,
+matrix of math nodes,
+left delimiter = {[},
+right delimiter = {]},
+]
+(A)
+{
+A_{11} & 0 \\
+0 & A_{22} \\
+};
+
+\node[right=0.25em of A](p){+};
+
+\matrix[
+right=2em of A.north east,
+anchor=north west,
+matrix of math nodes,
+left delimiter = {[},
+right delimiter = {]},
+nodes = {
+minimum height = 3em
+},
+]
+(U)
+{
+U_{1} & 0 \\
+0 & U_{2} \\
+};
+
+\matrix[
+right = 0.25 em of U.north east,
+anchor=north west,
+matrix of math nodes,
+left delimiter = {[},
+right delimiter = {]},
+]
+(At)
+{
+0&\widetilde{A}_{12} \\
+ \widetilde{A}_{21}&0 \\
+};
+
+\matrix[
+right=.25em of At.north east,
+anchor=north west,
+matrix of math nodes,
+left delimiter = {[},
+right delimiter = {]},
+nodes = {
+minimum width = 4em
+},
+]
+(V)
+{
+V_{1}^T & 0 \\
+0 & V_{2}^T \\
+};
+\draw[red, dashed] (U-1-1.north east) -- (U-2-2.south west);
+\draw[red, dashed] (U-1-1.south west) -- (U-1-2.south east);
+\draw[red, dashed] (V-1-1.north east) -- (V-2-2.south west);
+\draw[red, dashed] (V-1-1.south west) -- (V-1-2.south east);
+
+\node[above =.5em of U, OliveGreen]() {$n \times 2k$};
+\node[above =.5em of At, OliveGreen]() {$2k \times 2k$};
+\node[above =.5em of V, OliveGreen]() {$2k \times n$};
+    \end{tikzpicture}

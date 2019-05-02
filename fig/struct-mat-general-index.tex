@@ -1,0 +1,18 @@
+\begin{tikzpicture}[decoration=brace]
+\matrix[
+matrix of math nodes,
+nodes in empty cells,
+every node/.style = {minimum size=2em},
+left delimiter={[},
+right delimiter={]},
+row sep=.25em,
+column sep=1em,
+]
+(m){
+&&\\
+&&|[draw, red]| {\color{black} $A_{\sigma\tau}$}\\
+&&\\
+};
+\draw[decorate,transform canvas={yshift=3em},thick, red] (m-2-3.north west) -- node[above=2pt] {$I_{\tau}$} (m-2-3.north east);
+\draw[decorate,transform canvas={xshift=-7.5em},thick, red] (m-2-3.south west) -- node[left=2pt] {$I_{\sigma}$} (m-2-3.north west);
+\end{tikzpicture}

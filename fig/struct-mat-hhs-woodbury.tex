@@ -1,0 +1,87 @@
+
+\begin{tikzpicture}
+\matrix[
+left delimiter = {[},
+right delimiter = {]},
+matrix of nodes,
+every node/.style={
+    draw,
+    minimum size=.5cm
+},
+row sep=1mm,
+column sep=1mm
+]
+(D)
+{
+\ &&&\\
+&\ &&\\
+&&\ &\\
+&&&\ \\
+};
+\node[right=1em of D](){+};
+\matrix[
+right=3.5em of D.north east,
+anchor=north west,
+left delimiter = {[},
+right delimiter = {]},
+matrix of nodes,
+every node/.style={
+    draw,
+    minimum height=.8cm
+},
+row sep=1mm,
+column sep=1mm
+]
+(U)
+{
+\ &&&\\
+&\ &&\\
+&&\ &\\
+&&&\ \\
+};
+\matrix[
+right=2em of U.north east,
+anchor=north west,
+left delimiter = {[},
+right delimiter = {]},
+matrix of nodes,
+every node/.style={
+    draw,
+    minimum size=2mm
+},
+row sep=1mm,
+column sep=1mm
+]
+(At)
+{
+\ &\ &\ &\ \\
+\ &\ &\ &\ \\
+\ &\ &\ &\ \\
+\ &\ &\ &\ \\
+};
+\matrix[
+right=2em of At.north east,
+anchor=north west,
+left delimiter = {[},
+right delimiter = {]},
+matrix of nodes,
+every node/.style={
+    draw,
+    minimum width=.8cm
+},
+row sep=1mm,
+column sep=1mm
+]
+(V)
+{
+\ &&&\\
+&\ &&\\
+&&\ &\\
+&&&\ \\
+};
+\node[left=1em of D](){$A^{-1}=$};
+\node[below=1em of D](){$G$};
+\node[below=1em of U](){$E$};
+\node[below=1em of At](){$\left(\widetilde{A}-\widetilde{D}\right)^{-1}$};
+\node[below=1em of V](){$F^T$};
+\end{tikzpicture}

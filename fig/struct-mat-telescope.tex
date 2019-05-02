@@ -1,0 +1,69 @@
+
+    \begin{tikzpicture}[
+    ]
+        \matrix
+        [U matrix]
+        (U3)
+        {
+        \ &&&&&&&\\
+        &\ &&&&&&\\
+        &&\ &&&&&\\
+        &&&\ &&&&\\
+        &&&&\ &&&\\
+        &&&&&\ &&\\
+        &&&&&&\ &\\
+        &&&&&&&\ \\
+        };
+        \node[left = 1em of U3](){=};
+        \matrix
+        [U matrix,
+        right=3em of U3.north east,
+        anchor=north west, ]
+        (U2)
+        {
+        \ &&&\\
+        &\ &&\\
+        &&\ &\\
+        &&&\ \\
+        };
+
+        \draw[thick] (U2-1-1.north west)++(-1em, 1em) to[bend right=15] ++(0, -9em);
+
+        \matrix
+        [U matrix,
+        right=2em of U2.north east,
+        anchor=north west, ]
+        (U1)
+        {
+        \ &\\
+        &\ \\
+        };
+
+        \draw[thick] (U1-1-1.north west)++(-1em, 1em) to[bend right=15] ++(0, -5em);
+
+        \matrix
+        [B matrix,
+        right=2em of U1.north east,
+        anchor=north west, ]
+        (B0)
+        {
+        \ &\\
+        &\ \\
+        };
+        \matrix
+        [V matrix,
+        right=2em of B0.north east,
+        anchor=north west, ]
+        (V1)
+        {
+        \ &\\
+        &\ \\
+        };
+        \node[right=1em of V1](){+};
+
+        \node[OliveGreen, right=2em of U3-2-2](){$U^{(3)}$};
+        \node[OliveGreen, right=1em of U2-1-1](){$U^{(2)}$};
+        \node[OliveGreen, below=.5em of U1](){$U^{(1)}$};
+        \node[OliveGreen, below=.5em of B0](){$B^{(0)}$};
+        \node[OliveGreen, below=.5em of V1](){$V^{(1)T}$};
+    \end{tikzpicture}

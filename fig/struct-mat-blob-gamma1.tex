@@ -1,0 +1,28 @@
+
+\begin{tikzpicture}[
+blob/.style={use Hobby shortcut, closed=true},
+point/.style={circle, minimum size=2mm, inner sep=0pt, fill}
+]
+    \draw[blob] (0, 0) node {} ..
+    (.8, -1.5) ..
+    (3, -1) ..
+    (6, -2.5) ..
+    (8, -1) ..
+    (6, 1.5) ..
+    (5, 1) ..
+    (4, .8) ..
+    (3, 1.5) ..
+    (1.2, 1.5)
+    ;
+    \node[point]() at (0, 0){};
+    \node[point]() at (.8, -1.5){};
+    \node[point, label={$\vec{x}_3$}]() at (1.2, 1.5){};
+    \node[point]() at (3, -1){};
+    \node[point, label={$\vec{x}_{N-1}$}]() at (6, 1.5){};
+    \node[point, label={$\vec{x}_N$}]() at (5, 1){};
+    \node[point, label={$\vec{x}_1$}]() at (4, 0.8){};
+    \node[point, label={$\vec{x}_2$}]() at (3, 1.5){};
+
+    \draw[->, red, thick, font=\Large] (8, 2) node[fill=white](){$\Gamma_1$} -- (7.28, 1.28);
+
+\end{tikzpicture}

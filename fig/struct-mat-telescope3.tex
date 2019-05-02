@@ -1,0 +1,32 @@
+
+    \begin{tikzpicture}[ ]
+    \matrix
+        [V matrix, ]
+        (V3)
+        {
+        \ &&&&&&&\\
+        &\ &&&&&&\\
+        &&\ &&&&&\\
+        &&&\ &&&&\\
+        &&&&\ &&&\\
+        &&&&&\ &&\\
+        &&&&&&\ &\\
+        &&&&&&&\ \\
+        };
+        \node[right=1em of V3](){+};
+
+        \node[OliveGreen, right=5em of V3-1-1](){$V^{(3)T}$};
+    \matrix[B matrix, right=3em of V3.north east, anchor=north west]
+        (D3)
+        {
+        \ &&&&&&&\\
+        &\ &&&&&&\\
+        &&\ &&&&&\\
+        &&&\ &&&&\\
+        &&&&\ &&&\\
+        &&&&&\ &&\\
+        &&&&&&\ &\\
+        &&&&&&&\ \\
+        };
+        \node[OliveGreen, right=3em of D3-1-1](){$D^{(3)}$};
+    \end{tikzpicture}

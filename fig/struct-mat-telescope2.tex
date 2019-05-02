@@ -1,0 +1,42 @@
+
+    \begin{tikzpicture}[ ]
+    \matrix
+        [B matrix,  ]
+        (B1)
+        {
+        &\ &&\\
+        \ &&&\\
+        &&&\ \\
+        &&\ &\\
+        };
+
+    \node[OliveGreen, right=.25em of B1-1-2](){$B^{(1)}$};
+    \draw[thick] (B1-1-2.north east)++(3.2em, .5em) to[bend left=15] ++(0, -5em);
+
+    \matrix
+        [V matrix, right=2em of B1.north east, anchor=north west]
+        (V2)
+        {
+        \ &&&\\
+        &\ &&\\
+        &&\ &\\
+        &&&\ \\
+        };
+        \node[OliveGreen, right=2em of V2-1-1](){$V^{(2)T}$};
+        \node[right=1em of V2](){+};
+        \matrix[B matrix, right=3em of V2.north east, anchor=north west]
+        (B2)
+        {
+        &\ &&&&&&\\
+        \ &&&&&&&\\
+        &&&\ &&&&\\
+        &&\ &&&&&\\
+        &&&&&\ &&\\
+        &&&\ &&&&\\
+        &&&&&&&\ \\
+        &&&&&&\ &\\
+        };
+        \draw[thick] (B2-1-2.north east)++(7em, 1em) to[bend left=15] ++(0, -9em);
+        \node[OliveGreen, right=2em of B2-1-2](){$B^{(2)}$};
+        \node[right=2em of B2](){$\times$};
+    \end{tikzpicture}

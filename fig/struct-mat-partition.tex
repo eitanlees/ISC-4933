@@ -1,0 +1,46 @@
+\begin{tikzpicture}
+    \matrix[
+    matrix of math nodes,
+    nodes in empty cells,
+    left delimiter={[},
+    right delimiter={]},
+    every node/.style={
+        ,
+        anchor=center,
+        minimum size=3em,
+        inner sep=0pt
+        },
+    ]
+    (m)
+    {
+          $A_{8,   8}$&$A_{8,   9}$&&&&&&\\
+          $A_{9,   8}$&$A_{9,   9}$&&&&&&\\
+    &&    $A_{10, 10}$&$A_{10, 11}$&&&&\\
+    &&    $A_{11, 10}$&$A_{11, 11}$&&&&\\
+    &&&&  $A_{12, 12}$&$A_{12, 13}$&&\\
+    &&&&  $A_{13, 12}$&$A_{13, 13}$&&\\
+    &&&&&&$A_{14, 14}$&$A_{14, 15}$\\
+    &&&&&&$A_{15, 14}$&$A_{15, 15}$\\
+    };
+    \draw[red, dashed] (m-1-1.south west) -- (m-1-2.south east);
+    \draw[red, dashed] (m-2-1.south west) -- (m-2-4.south east);
+    \draw[red, dashed] (m-3-3.south west) -- (m-3-4.south east);
+    \draw[red, dashed] (m-4-1.south west) -- (m-4-8.south east);
+    \draw[red, dashed] (m-5-5.south west) -- (m-5-6.south east);
+    \draw[red, dashed] (m-6-5.south west) -- (m-6-8.south east);
+    \draw[red, dashed] (m-7-7.south west) -- (m-7-8.south east);
+
+    \draw[dashed, red] (m-1-1.north east) -- (m-2-1.south east);
+    \draw[dashed, red] (m-1-2.north east) -- (m-4-2.south east);
+    \draw[dashed, red] (m-3-3.north east) -- (m-4-3.south east);
+    \draw[dashed, red] (m-1-4.north east) -- (m-8-4.south east);
+    \draw[dashed, red] (m-5-5.north east) -- (m-6-5.south east);
+    \draw[dashed, red] (m-5-6.north east) -- (m-8-6.south east);
+    \draw[dashed, red] (m-7-7.north east) -- (m-8-7.south east);
+    \node[font=\Large]() at (m-1-3.south east){$A_{4,5}$};
+    \node[font=\Large]() at (m-3-1.south east){$A_{5, 4}$};
+    \node[font=\Large]() at (m-5-7.south east){$A_{6, 7}$};
+    \node[font=\Large]() at (m-7-5.south east){$A_{7, 6}$};
+    \node[font=\LARGE]() at (m-2-6.south east){$A_{2, 3}$};
+    \node[font=\LARGE]() at (m-6-2.south east){$A_{3, 2}$};
+\end{tikzpicture}

@@ -28,36 +28,7 @@ Continuing we have a tree structure
 
 
 \begin{center}
-    \begin{tikzpicture}[shorten >=1pt,
-    edge from parent/.style={draw,-latex},
-    level 1/.style={sibling distance=5cm, minimum width=5cm},
-    level 2/.style={sibling distance=2.5cm, minimum width=2.5cm,font=\small},
-    level 3/.style={sibling distance=1.25cm, minimum width=1.25cm},
-    every node/.style = {shape=rectangle, rounded corners,
-    draw, align=center}]
-    \node[minimum width=10cm](I1){$I_1 = \{1, \ldots, n\}$}
-    child {node{$I_2 = \{1, \ldots, \frac{n}{2}\}$}
-        child{node{$I_4=$\\$\{1, \ldots, \frac{n}{4}\}$}
-            child{node{$I_8$}}
-            child{node{$I_9$}}
-        }
-        child{node{$I_5=$\\$\{\frac{n}{4}+1, \ldots, \frac{n}{2}\}$}
-            child{node{$I_{10}$}}
-            child{node{$I_{11}$}}
-        }
-    }
-    child {node{$I_3 = \{\frac{n}{2}+1, \ldots, n\}$}
-        child{node{$I_6=$\\$\{\frac{n}{2}+1, \ldots, \frac{3n}{4}\}$}
-            child{node{$I_{12}$}}
-            child{node{$I_{13}$}}
-        }
-        child{node{$I_7=$\\$\{ \frac{3n}{4}+1, \ldots, n\}$}
-            child{node{$I_{14}$}}
-            child{node{$I_{15}$}}
-        }
-    }
-    ;
-    \end{tikzpicture}
+    \input{fig/struct-mat-index-set-tree.tex}
 \end{center}
 
 Then, for $\sigma, \tau \in \mathbb{N}$ we let $A_{\sigma \tau}$ be the submatrix of $A$ with rows in the index set $I_\sigma$ and columns in the index set $I_\tau$. Then, the new labelling from the above partition is
@@ -86,252 +57,18 @@ A_{32} & A_{33} \\
 
 In general
 \begin{center}
-\begin{tikzpicture}[decoration=brace]
-\matrix[
-matrix of math nodes,
-nodes in empty cells,
-every node/.style = {minimum size=2em},
-left delimiter={[},
-right delimiter={]},
-row sep=.25em,
-column sep=1em,
-]
-(m){
-&&\\
-&&|[draw, red]| {\color{black} $A_{\sigma\tau}$}\\
-&&\\
-};
-\draw[decorate,transform canvas={yshift=3em},thick, red] (m-2-3.north west) -- node[above=2pt] {$I_{\tau}$} (m-2-3.north east);
-\draw[decorate,transform canvas={xshift=-7.5em},thick, red] (m-2-3.south west) -- node[left=2pt] {$I_{\sigma}$} (m-2-3.north west);
-\end{tikzpicture}
+    \input{fig/struct-mat-general-index.tex}
 \end{center}
 
 %% Lecture 23
 Applying the off-diagonal structure recursively,
 \begin{center}
-    \begin{tikzpicture}
-    \matrix[
-    matrix of math nodes,
-    nodes in empty cells,
-    left delimiter={[},
-    right delimiter={]},
-    every node/.style={
-        ,
-        anchor=center,
-        minimum size=3em,
-        inner sep=0pt
-        },
-    ]
-    (m)
-    {
-          $A_{8,   8}$&$A_{8,   9}$&&&&&&\\
-          $A_{9,   8}$&$A_{9,   9}$&&&&&&\\
-    &&    $A_{10, 10}$&$A_{10, 11}$&&&&\\
-    &&    $A_{11, 10}$&$A_{11, 11}$&&&&\\
-    &&&&  $A_{12, 12}$&$A_{12, 13}$&&\\
-    &&&&  $A_{13, 12}$&$A_{13, 13}$&&\\
-    &&&&&&$A_{14, 14}$&$A_{14, 15}$\\
-    &&&&&&$A_{15, 14}$&$A_{15, 15}$\\
-    };
-    \draw[red, dashed] (m-1-1.south west) -- (m-1-2.south east);
-    \draw[red, dashed] (m-2-1.south west) -- (m-2-4.south east);
-    \draw[red, dashed] (m-3-3.south west) -- (m-3-4.south east);
-    \draw[red, dashed] (m-4-1.south west) -- (m-4-8.south east);
-    \draw[red, dashed] (m-5-5.south west) -- (m-5-6.south east);
-    \draw[red, dashed] (m-6-5.south west) -- (m-6-8.south east);
-    \draw[red, dashed] (m-7-7.south west) -- (m-7-8.south east);
-
-    \draw[dashed, red] (m-1-1.north east) -- (m-2-1.south east);
-    \draw[dashed, red] (m-1-2.north east) -- (m-4-2.south east);
-    \draw[dashed, red] (m-3-3.north east) -- (m-4-3.south east);
-    \draw[dashed, red] (m-1-4.north east) -- (m-8-4.south east);
-    \draw[dashed, red] (m-5-5.north east) -- (m-6-5.south east);
-    \draw[dashed, red] (m-5-6.north east) -- (m-8-6.south east);
-    \draw[dashed, red] (m-7-7.north east) -- (m-8-7.south east);
-    \node[font=\Large]() at (m-1-3.south east){$A_{4,5}$};
-    \node[font=\Large]() at (m-3-1.south east){$A_{5, 4}$};
-    \node[font=\Large]() at (m-5-7.south east){$A_{6, 7}$};
-    \node[font=\Large]() at (m-7-5.south east){$A_{7, 6}$};
-    \node[font=\LARGE]() at (m-2-6.south east){$A_{2, 3}$};
-    \node[font=\LARGE]() at (m-6-2.south east){$A_{3, 2}$};
-    \end{tikzpicture}
+    \input{fig/struct-mat-partition.tex}
 \end{center}
 
 If we need to compute $A\vec{x}$, this can be done as follows
 \begin{center}
-    \begin{tikzpicture}[decoration=brace]
-        \matrix[,
-    matrix of math nodes,
-    nodes in empty cells,
-    left delimiter={[},
-    right delimiter={]},
-    every node/.style={
-        %draw,
-        font=\tiny,
-        anchor=center,
-        minimum size=2em,
-        inner sep=0pt
-        },
-    ]
-    (m1)
-   {
-          &&&&&&&\\
-          &&&&&&&\\
-    &&    &&&&&\\
-    &&    &&&&&\\
-    &&&&  &&&\\
-    &&&&  &&&\\
-    &&&&&&&\\
-    &&&&&&&\\
-    };
-
-    \draw[red, dashed] (m1-4-1.south west) -- (m1-4-8.south east);
-    \draw[dashed, red] (m1-1-4.north east) -- (m1-8-4.south east);
-    \node[font=\LARGE]() at (m1-2-6.south east){$A_{2, 3}$};
-    \node[font=\LARGE]() at (m1-6-2.south east){$A_{3, 2}$};
-    \node[font=\LARGE]() at (m1-2-2.south east){$0$};
-    \node[font=\LARGE]() at (m1-6-6.south east){$0$};
-    \matrix[right =of m1,
-    matrix of math nodes,
-    nodes in empty cells,
-    left delimiter={[},
-    right delimiter={]},
-    every node/.style={
-        %draw,
-        font=\tiny,
-        anchor=center,
-        minimum size=2em,
-        inner sep=0pt
-        },
-    ]
-    (m2)
-   {
-          &&&&&&&\\
-          &&&&&&&\\
-    &&    &&&&&\\
-    &&    &&&&&\\
-    &&&&  &&&\\
-    &&&&  &&&\\
-    &&&&&&&\\
-    &&&&&&&\\
-    };
-
-    \draw[red, dashed] (m2-4-1.south west) -- (m2-4-8.south east);
-    \draw[dashed, red] (m2-1-4.north east) -- (m2-8-4.south east);
-    \draw[red, dashed] (m2-2-1.south west) -- (m2-2-4.south east);
-    \draw[dashed, red] (m2-1-2.north east) -- (m2-4-2.south east);
-    \draw[dashed, red] (m2-5-6.north east) -- (m2-8-6.south east);
-    \draw[red, dashed] (m2-6-5.south west) -- (m2-6-8.south east);
-    \node[font=\Large]() at (m2-1-3.south east){$A_{4,5}$};
-    \node[font=\Large]() at (m2-3-1.south east){$A_{5, 4}$};
-    \node[font=\Large]() at (m2-5-7.south east){$A_{6, 7}$};
-    \node[font=\Large]() at (m2-7-5.south east){$A_{7, 6}$};
-    \node[font=\Large]() at (m2-1-1.south east){$0$};
-    \node[font=\Large]() at (m2-3-3.south east){$0$};
-    \node[font=\Large]() at (m2-5-5.south east){$0$};
-    \node[font=\Large]() at (m2-7-7.south east){$0$};
-    \node[font=\LARGE]() at (m2-2-6.south east){$0$};
-    \node[font=\LARGE]() at (m2-6-2.south east){$0$};
-    \node[right = .75em of m1](){$+$};
-    \node[right = .75em of m2](){$+$};
-
-
-    \matrix[below=of m1,
-    matrix of math nodes,
-    nodes in empty cells,
-    left delimiter={[},
-    right delimiter={]},
-    every node/.style={
-        %draw,
-        font=\tiny,
-        anchor=center,
-        minimum size=2em,
-        inner sep=0pt
-        },
-    ]
-    (m3)
-        {
-          &$A_{8,   9}$&&&&&&\\
-          $A_{9,   8}$&&&&&&&\\
-    &&    &$A_{10, 11}$&&&&\\
-    &&    $A_{11, 10}$&&&&&\\
-    &&&&  &$A_{12, 13}$&&\\
-    &&&&  $A_{13, 12}$&&&\\
-    &&&&&&&$A_{14, 15}$\\
-    &&&&&&$A_{15, 14}$&\\
-    };
-    \draw[red, dashed] (m3-1-1.south west) -- (m3-1-2.south east);
-    \draw[red, dashed] (m3-2-1.south west) -- (m3-2-4.south east);
-    \draw[red, dashed] (m3-3-3.south west) -- (m3-3-4.south east);
-    \draw[red, dashed] (m3-4-1.south west) -- (m3-4-8.south east);
-    \draw[red, dashed] (m3-5-5.south west) -- (m3-5-6.south east);
-    \draw[red, dashed] (m3-6-5.south west) -- (m3-6-8.south east);
-    \draw[red, dashed] (m3-7-7.south west) -- (m3-7-8.south east);
-
-    \draw[dashed, red] (m3-1-1.north east) -- (m3-2-1.south east);
-    \draw[dashed, red] (m3-1-2.north east) -- (m3-4-2.south east);
-    \draw[dashed, red] (m3-3-3.north east) -- (m3-4-3.south east);
-    \draw[dashed, red] (m3-1-4.north east) -- (m3-8-4.south east);
-    \draw[dashed, red] (m3-5-5.north east) -- (m3-6-5.south east);
-    \draw[dashed, red] (m3-5-6.north east) -- (m3-8-6.south east);
-    \draw[dashed, red] (m3-7-7.north east) -- (m3-8-7.south east);
-    \node[right = .75em of m3](){$+$};
-    \matrix[,
-    right=of m3,
-    matrix of math nodes,
-    nodes in empty cells,
-    left delimiter={[},
-    right delimiter={]},
-    every node/.style={
-        %draw,
-        font=\tiny,
-        anchor=center,
-        minimum size=2em,
-        inner sep=0pt
-        },
-    ]
-    (m4)
-    {
-          $A_{8,   8}$&&&&&&&\\
-          &$A_{9,   9}$&&&&&&\\
-    &&    $A_{10, 10}$&&&&&\\
-    &&    &$A_{11, 11}$&&&&\\
-    &&&&  $A_{12, 12}$&&&\\
-    &&&&  &$A_{13, 13}$&&\\
-    &&&&&&$A_{14, 14}$&\\
-    &&&&&&&$A_{15, 15}$\\
-    };
-
-    \draw[decorate,transform canvas={xshift=-2em}, thick] (m1-8-1.south west)--(m1-1-1.north west);
-    \draw[decorate,transform canvas={xshift=1.8em}, thick] (m4-1-8.north east)--(m4-8-8.south east);
-
-        \matrix[,
-    below=of m3,
-    matrix of math nodes,
-    nodes in empty cells,
-    left delimiter={[},
-    right delimiter={]},
-    every node/.style={
-        %draw,
-        anchor=center,
-        font=\Large,
-        minimum size=2em,
-        inner sep=0pt
-        },
-    ]
-    (x)
-    {
-    \\
-    \\
-    \\
-    $\vec{x}$\\
-    \\
-    \\
-    \\
-    \\
-    };
-   \node[left=of m1](){$A\vec{X}$ = };
-    \end{tikzpicture}
+    \input{fig/struct-mat-large-matvec.tex}
 \end{center}
 
 \begin{equation*}
@@ -503,80 +240,7 @@ An issue with this technique is that we can not compute the (2,2) block of $B$ u
 \end{align*}
 where $U_1, U_2 \in \mathbb{R}^{n/2 \times k}$ \quad $\widetilde{A}_{12}, \widetilde{A}_{21}\in \mathbb{R}^{k \times k}$ \quad $V_1, V_2 \in \mathbb{R}^{n/2 \times k}$
 \begin{center}
-    \begin{tikzpicture}[
-every left delimiter/.style={xshift=2mm},
-every right delimiter/.style={xshift=-2mm},
-    ]
-
-\node(e){=};
-
-\matrix[
-right = 0.25 em of e,
-matrix of math nodes,
-left delimiter = {[},
-right delimiter = {]},
-]
-(A)
-{
-A_{11} & 0 \\
-0 & A_{22} \\
-};
-
-\node[right=0.25em of A](p){+};
-
-\matrix[
-right=2em of A.north east,
-anchor=north west,
-matrix of math nodes,
-left delimiter = {[},
-right delimiter = {]},
-nodes = {
-minimum height = 3em
-},
-]
-(U)
-{
-U_{1} & 0 \\
-0 & U_{2} \\
-};
-
-\matrix[
-right = 0.25 em of U.north east,
-anchor=north west,
-matrix of math nodes,
-left delimiter = {[},
-right delimiter = {]},
-]
-(At)
-{
-0&\widetilde{A}_{12} \\
- \widetilde{A}_{21}&0 \\
-};
-
-\matrix[
-right=.25em of At.north east,
-anchor=north west,
-matrix of math nodes,
-left delimiter = {[},
-right delimiter = {]},
-nodes = {
-minimum width = 4em
-},
-]
-(V)
-{
-V_{1}^T & 0 \\
-0 & V_{2}^T \\
-};
-\draw[red, dashed] (U-1-1.north east) -- (U-2-2.south west);
-\draw[red, dashed] (U-1-1.south west) -- (U-1-2.south east);
-\draw[red, dashed] (V-1-1.north east) -- (V-2-2.south west);
-\draw[red, dashed] (V-1-1.south west) -- (V-1-2.south east);
-
-\node[above =.5em of U, OliveGreen]() {$n \times 2k$};
-\node[above =.5em of At, OliveGreen]() {$2k \times 2k$};
-\node[above =.5em of V, OliveGreen]() {$2k \times n$};
-    \end{tikzpicture}
+    \input{fig/struct-mat-low-rank-correction.tex}
 \end{center}
 
 The Woodbury identity is
@@ -728,102 +392,17 @@ or
 
 Let's focus on the case where $\{\vec{x}_i\}\in\mathbb{R}^2$ are all on some closed curve in $\mathbb{R}^2$
 \begin{center}
-\begin{tikzpicture}[
-blob/.style={use Hobby shortcut, closed=true},
-point/.style={circle, minimum size=2mm, inner sep=0pt, fill}
-]
-    \draw[blob] (0, 0) node {} ..
-    (.8, -1.5) ..
-    (3, -1) ..
-    (6, -2.5) ..
-    (8, -1) ..
-    (6, 1.5) ..
-    (5, 1) ..
-    (4, .8) ..
-    (3, 1.5) ..
-    (1.2, 1.5)
-    ;
-    \node[point]() at (0, 0){};
-    \node[point]() at (.8, -1.5){};
-    \node[point, label={$\vec{x}_3$}]() at (1.2, 1.5){};
-    \node[point]() at (3, -1){};
-    \node[point, label={$\vec{x}_{N-1}$}]() at (6, 1.5){};
-    \node[point, label={$\vec{x}_N$}]() at (5, 1){};
-    \node[point, label={$\vec{x}_1$}]() at (4, 0.8){};
-    \node[point, label={$\vec{x}_2$}]() at (3, 1.5){};
-
-    \draw[->, red, thick, font=\Large] (8, 2) node[fill=white](){$\Gamma_1$} -- (7.28, 1.28);
-
-\end{tikzpicture}
+    \input{fig/struct-mat-blob-gamma1.tex}
 \end{center}
 \begin{center}
-\begin{tikzpicture}[
-blob/.style={use Hobby shortcut, closed=true},
-point/.style={circle, minimum size=2mm, inner sep=0pt, fill}
-]
-    \draw[blob] (0, 0) node {} ..
-    (.8, -1.5) ..
-    (3, -1) ..
-    (6, -2.5) ..
-    (8, -1) ..
-    (6, 1.5) ..
-    (5, 1) ..
-    (4, .8) ..
-    (3, 1.5) ..
-    (1.2, 1.5)
-    ;
-
-    \draw[->, red, thick, font=\Large] (8, 2) node[fill=white](){$\Gamma_3$} -- (7.28, 1.28);
-    \draw[->, red, thick, font=\Large] (0.5, 2.5) node[fill=white](){$\Gamma_2$} -- (1.2, 1.5);
-    \draw[red, ultra thick](4.1, 0.6) -- (4.2, .9);
-    \draw[red, ultra thick](3.4, -1.2) -- (3.5, -0.9);
-
-\end{tikzpicture}
+    \input{fig/struct-mat-blob-gamma23.tex}
 \end{center}
 \begin{center}
-\begin{tikzpicture}[
-blob/.style={use Hobby shortcut, closed=true},
-point/.style={circle, minimum size=2mm, inner sep=0pt, fill}
-]
-    \draw[blob] (0, 0) node {} ..
-    (.8, -1.5) ..
-    (3, -1) ..
-    (6, -2.5) ..
-    (8, -1) ..
-    (6, 1.5) ..
-    (5, 1) ..
-    (4, .8) ..
-    (3, 1.5) ..
-    (1.2, 1.5)
-    ;
-
-    \draw[->, red, thick, font=\Large] (8, 2) node[fill=white](){$\Gamma_7$} -- (7.28, 1.28);
-    \draw[->, red, thick, font=\Large] (0.5, 2.5) node[fill=white](){$\Gamma_4$} -- (1.2, 1.5);
-    \draw[->, red, thick, font=\Large] (0.5, -2.75) node[fill=white](){$\Gamma_5$} -- (.8, -1.5);
-    \draw[->, red, thick, font=\Large] (6, -3.5) node[fill=white](){$\Gamma_6$} -- (6, -2.5);
-    \draw[red, ultra thick](4.1, 0.6) -- (4.2, .9);
-    \draw[red, ultra thick](3.4, -1.2) -- (3.5, -0.9);
-    \draw[red, ultra thick](-.15, 0) -- (.15, 0);
-    \draw[red, ultra thick](7.8, -1) -- (8.2, -1.1);
-\end{tikzpicture}
+    \input{fig/struct-mat-blob-gamma4567.tex}
 \end{center}
 
 \begin{center}
-    \begin{tikzpicture}[shorten >=1pt,
-    edge from parent/.style={draw,-latex},
-    level 1/.style={sibling distance=2cm},
-    level 2/.style={sibling distance=1cm}]
-    \node(){$\Gamma_1$}
-    child { node{$\Gamma_2$}
-        child {node{$\Gamma_4$}}
-        child {node{$\Gamma_5$}}
-    }
-    child { node{$\Gamma_3$}
-        child {node{$\Gamma_6$}}
-        child {node{$\Gamma_7$}}
-    }
-    ;
-\end{tikzpicture}
+    \input{fig/struct-mat-gamma-tree.tex}
 \end{center}
 
 \underline{Example}
@@ -844,90 +423,11 @@ Let's compute the $10^{-10}$ numerical ranks with $N=1024$.
 
 
 \begin{center}
-    \begin{tikzpicture}
-    \matrix[
-    matrix of math nodes,
-    nodes in empty cells,
-    left delimiter={[},
-    right delimiter={]},
-    every node/.style={
-        color=OliveGreen,
-        anchor=center,
-        minimum size=3em,
-        inner sep=0pt
-        },
-    ]
-    (m)
-    {
-          &19&&&&&&\\
-          19&&&&&&&\\
-    &&    &19&&&&\\
-    &&    19&&&&&\\
-    &&&&  &19&&\\
-    &&&&  19&&&\\
-    &&&&&&&19\\
-    &&&&&&19&\\
-    };
-
-    { \color{OliveGreen}
-    \node[font=\Large]() at (m-1-3.south east){24};
-    \node[font=\Large]() at (m-3-1.south east){24};
-    \node[font=\Large]() at (m-5-7.south east){24};
-    \node[font=\Large]() at (m-7-5.south east){24};
-    \node[font=\LARGE]() at (m-2-6.south east){46};
-    \node[font=\LARGE]() at (m-6-2.south east){46};
-    \node[font=\LARGE]() at (m-1-5.south east){$A_{23}$};
-    \draw[<-] (m-1-7) --  ++(3,0) node[fill=white] {$512 \times 512$};
-    \draw[<-] (m-5-8) --  ++(2,0) node[fill=white] {$256 \times 256$};
-    \draw[<-] (m-7-8) --  ++(2,0) node[fill=white] {$128 \times 128$};
-    }
-    \draw[red, dashed] (m-1-1.south west) -- (m-1-2.south east);
-    \draw[red, dashed] (m-2-1.south west) -- (m-2-4.south east);
-    \draw[red, dashed] (m-3-3.south west) -- (m-3-4.south east);
-    \draw[red, dashed] (m-4-1.south west) -- (m-4-8.south east);
-    \draw[red, dashed] (m-5-5.south west) -- (m-5-6.south east);
-    \draw[red, dashed] (m-6-5.south west) -- (m-6-8.south east);
-    \draw[red, dashed] (m-7-7.south west) -- (m-7-8.south east);
-
-    \draw[dashed, red] (m-1-1.north east) -- (m-2-1.south east);
-    \draw[dashed, red] (m-1-2.north east) -- (m-4-2.south east);
-    \draw[dashed, red] (m-3-3.north east) -- (m-4-3.south east);
-    \draw[dashed, red] (m-1-4.north east) -- (m-8-4.south east);
-    \draw[dashed, red] (m-5-5.north east) -- (m-6-5.south east);
-    \draw[dashed, red] (m-5-6.north east) -- (m-8-6.south east);
-    \draw[dashed, red] (m-7-7.north east) -- (m-8-7.south east);
-
-    \node[left=1em of m](){$A=$};
-    \end{tikzpicture}
+    \input{fig/struct-mat-partition-example.tex}
 \end{center}
 
 \begin{center}
-\begin{tikzpicture}[
-blob/.style={use Hobby shortcut, closed=true},
-point/.style={circle, minimum size=2mm, inner sep=0pt, fill}
-]
-    \draw[blob] (0, 0) node {} ..
-    (.8, -1.5) ..
-    (3, -1) ..
-    (6, -2.5) ..
-    (8, -1) ..
-    (6, 1.5) ..
-    (5, 1) ..
-    (4, .8) ..
-    (3, 1.5) ..
-    (1.2, 1.5)
-    ;
-
-    \draw[->, red, thick, font=\Large] (8, 2) node[fill=white](){$\Gamma_3$} -- (7.28, 1.28);
-    \draw[->, red, thick, font=\Large] (0.5, 2.5) node[fill=white](){$\Gamma_2$} -- (1.2, 1.5);
-    \draw[red, ultra thick](4.1, 0.6) -- (4.2, .9);
-    \draw[red, ultra thick](3.4, -1.2) -- (3.5, -0.9);
-    \draw[<-, thick, color=OliveGreen] (.5, .75) to[bend right=20] (7.8, .5);
-    \draw[->, thick, color=OliveGreen] (3, -1) to[bend right=20] (3.5, 1.);
-    \node[OliveGreen]() at (6, -1) {$A_{23}$};
-    \draw [OliveGreen, ->] (4, -2) node[fill=white]{$A_{45}$} to[bend right=10] (3.75, -.5);
-
-\end{tikzpicture}
+    \input{fig/struct-mat-blob-example.tex}
 \end{center}
 
 Given $\sigma(\vec{x}_1), \ldots, \sigma(\vec{x}_N)$, the half corresponding to the points in $\Gamma_3$ are $\vec{x}_i$ with $i=I_3$. Then, computing $A_{23}\vec{\sigma}_{I_3}$ return the function
@@ -996,95 +496,7 @@ where $k \ll n$. The assumption we have made is that one matrix $U_i$ works for 
     \end{bmatrix}
 \end{equation*}
 \begin{center}
-\begin{tikzpicture}
-\matrix[
-left delimiter = {[},
-right delimiter = {]},
-matrix of nodes,
-every node/.style={
-    draw,
-    pattern=north west lines,
-    minimum size=.5cm
-},
-row sep=1mm,
-column sep=1mm
-]
-(D)
-{
-\ &&&\\
-&\ &&\\
-&&\ &\\
-&&&\ \\
-};
-\node[right=1em of D](){+};
-\matrix[
-right=3.5em of D.north east,
-anchor=north west,
-left delimiter = {[},
-right delimiter = {]},
-matrix of nodes,
-every node/.style={
-    draw,
-    pattern=north west lines,
-    minimum height=.8cm
-},
-row sep=1mm,
-column sep=1mm
-]
-(U)
-{
-\ &&&\\
-&\ &&\\
-&&\ &\\
-&&&\ \\
-};
-\matrix[
-right=2em of U.north east,
-anchor=north west,
-left delimiter = {[},
-right delimiter = {]},
-matrix of nodes,
-every node/.style={
-    draw,
-    minimum size=2mm
-},
-row sep=1mm,
-column sep=1mm
-]
-(At)
-{
-&\ &\ &\ \\
-\ &&\ &\ \\
-\ &\ &&\ \\
-\ &\ &\ &\\
-};
-\matrix[
-right=2em of At.north east,
-anchor=north west,
-left delimiter = {[},
-right delimiter = {]},
-matrix of nodes,
-every node/.style={
-    draw,
-    pattern=north west lines,
-    minimum width=.8cm
-},
-row sep=1mm,
-column sep=1mm
-]
-(V)
-{
-\ &&&\\
-&\ &&\\
-&&\ &\\
-&&&\ \\
-};
-\node[left=1em of D](){$A=$};
-\node[above=1em of D, color=OliveGreen](){$4n \times 4n$};
-\node[above=1em of U, color=OliveGreen](){$4n \times 4k$};
-\node[below=1em of At, color=OliveGreen](){$4k \times 4k$};
-\node[below=1em of V, color=OliveGreen](){$4k \times 4n$};
-\end{tikzpicture}
+    \input{fig/struct-mat-hhs.tex}
 \end{center}
 
 \begin{equation*}
@@ -1104,92 +516,7 @@ This facterization is not possible if each $A_{ij}$ required a different $U_{ij}
     V^T D^{-1}
 \end{equation*}
 \begin{center}
-\begin{tikzpicture}
-\matrix[
-left delimiter = {[},
-right delimiter = {]},
-matrix of nodes,
-every node/.style={
-    draw,
-    minimum size=.5cm
-},
-row sep=1mm,
-column sep=1mm
-]
-(D)
-{
-\ &&&\\
-&\ &&\\
-&&\ &\\
-&&&\ \\
-};
-\node[right=1em of D](){+};
-\matrix[
-right=3.5em of D.north east,
-anchor=north west,
-left delimiter = {[},
-right delimiter = {]},
-matrix of nodes,
-every node/.style={
-    draw,
-    minimum height=.8cm
-},
-row sep=1mm,
-column sep=1mm
-]
-(U)
-{
-\ &&&\\
-&\ &&\\
-&&\ &\\
-&&&\ \\
-};
-\matrix[
-right=2em of U.north east,
-anchor=north west,
-left delimiter = {[},
-right delimiter = {]},
-matrix of nodes,
-every node/.style={
-    draw,
-    minimum size=2mm
-},
-row sep=1mm,
-column sep=1mm
-]
-(At)
-{
-\ &\ &\ &\ \\
-\ &\ &\ &\ \\
-\ &\ &\ &\ \\
-\ &\ &\ &\ \\
-};
-\matrix[
-right=2em of At.north east,
-anchor=north west,
-left delimiter = {[},
-right delimiter = {]},
-matrix of nodes,
-every node/.style={
-    draw,
-    minimum width=.8cm
-},
-row sep=1mm,
-column sep=1mm
-]
-(V)
-{
-\ &&&\\
-&\ &&\\
-&&\ &\\
-&&&\ \\
-};
-\node[left=1em of D](){$A^{-1}=$};
-\node[below=1em of D](){$G$};
-\node[below=1em of U](){$E$};
-\node[below=1em of At](){$\left(\widetilde{A}-\widetilde{D}\right)^{-1}$};
-\node[below=1em of V](){$F^T$};
-\end{tikzpicture}
+    \input{fig/struct-mat-hhs-woodbury.tex}
 \end{center}
 where
 \begin{align*}
@@ -1325,71 +652,7 @@ Introductin the extended variables $\widetilde{q}_i = V^T_i q_i$
 Then, $A\vec{q} = \vec{f}$ is equivalent to the extended system
 
 \begin{center}
-\begin{tikzpicture}
-\matrix[
-right delimiter = {]},
-left delimiter = {[},
-matrix of math nodes,
-nodes in empty cells,
-every node/.style={}
-]
-(A)
-{
-$D_4$&&& & 0& $U_4\widetilde{A}_{45}$ & $U_4\widetilde{A}_{46}$ & $U_4\widetilde{A}_{47}$ \\
-&$D_5$&& & $U_5\widetilde{A}_{54}$ & 0   & $U_5\widetilde{A}_{56}$ & $U_5\widetilde{A}_{57}$ \\
-&&$D_6$& & $U_6\widetilde{A}_{64}$ & $U_6\widetilde{A}_{65}$ & 0 & $U_6\widetilde{A}_{67}$ \\
-&&&$D_7$ & $U_7\widetilde{A}_{74}$ & $U_7\widetilde{A}_{75}$ & $U_7\widetilde{A}_{76}$ & 0    \\
-$-V^T_4$&&&&$I$&&&\\
-&$-V^T_5$&&&&$I$&&\\
-&&$-V^T_6$&&&&$I$&\\
-&&&$-V^T_7$&&&&$I$\\
-};
-\matrix[
-right=1.5em of A,
-right delimiter = {]},
-left delimiter = {[},
-matrix of math nodes,
-nodes in empty cells,
-every node/.style={
-minimum height = 1.75em
-}
-]
-(q)
-{
-$q_4$ \\
-$q_5$ \\
-$q_6$ \\
-$q_7$ \\
-$\widetilde{q_4}$\\
-$\widetilde{q_5}$\\
-$\widetilde{q_6}$\\
-$\widetilde{q_7}$\\
-};
-\node[right=1em of q](){=};
-\matrix[
-right=3.5em of q,
-right delimiter = {]},
-left delimiter = {[},
-matrix of math nodes,
-nodes in empty cells,
-every node/.style={
-minimum height = 1.75em
-}
-]
-(f)
-{
-$f_4$ \\
-$f_5$ \\
-$f_6$ \\
-$f_7$ \\
-0\\
-0\\
-0\\
-0\\
-};
-\draw[red, dashed] (A-4-1.south west) -- (f-4-1.south east);
-\draw[red, dashed] (A-2-5.north west)++(0, 1em) -- (A-8-4.south east);
-\end{tikzpicture}
+    \input{fig/struct-mat-extended-system.tex}
 \end{center}
 
 %% Lecture 27
@@ -1580,108 +843,7 @@ where $\widetilde{f}_i = \widetilde{A}_{ii}V^T_iD_i^{-1}f_i$.
 
 This is now a $4k \times 4k$ matrix for $\widetilde{q}_i$ instead of a $4n \times 4n$ matrix for $q_i$. Moreover, each off-diagonal block is simply a submatrix of the full matrix $A$. The speed up is $(\frac{n}{k})^3$. To get an asymtotically faster scheme, we recurse.
 
-\begin{tikzpicture}
-
-%% Step 1
-\begin{scope}[]
-    \draw[step=0.5] (0, 0) grid (4, 4);
-    \node[OliveGreen]() at (2, 4.25){$8n\times 8n$};
-\end{scope}
-
-%% Step 2
-\begin{scope}[
-xshift = 2.25cm,
-yshift = -6cm
-]
-    \draw[step=0.5] (0, 0) grid (4, 4);
-    \node[OliveGreen]() at (2, 4.25){$8k\times 8k$};
-    \draw[->, red, thick] (-0.5, 6) -- node[left]{Compression} (1, 4.2);
-    \draw[->, red, thick] (3.5, 4.2) -- node[left]{Cluster} (4, 6);
-
-    \foreach \i in {0.25, .75, ..., 3.75}{
-        \foreach \j in {0.25, 0.75, ..., 3.75}{
-        \node[inner sep=0pt, minimum size=5pt, fill, orange, circle]  () at (\i, \j) {};
-        };
-    };
-
-    \foreach \i/\j in {
-0.25/3.75,
-0.75/3.25,
-1.25/2.75,
-1.75/2.25,
-2.25/1.75,
-2.75/1.25,
-3.25/0.75,
-3.75/0.25
-    }{
-        \node[inner sep=0pt, minimum size=6pt, fill, white]  () at (\i, \j) {};
-    };
-\end{scope}
-
-%% Step 3
-\begin{scope}[
-xshift = 5.5cm,
-scale=0.75
-]
-    \draw[step=1] (0, 0) grid (4, 4);
-\end{scope}
-
-%% Step 4
-\begin{scope}[
-xshift = 8cm,
-yshift = -4cm,
-scale=0.5
-]
-    \draw[step=1] (0, 0) grid (4, 4);
-    \draw[->, red, thick] (-0.5, 8) -- (1, 4.2);
-    \draw[->, red, thick] (2.5, 4.2) -- (5, 8);
-    \foreach \i in {0.5, 1.5, ..., 3.75}{
-        \foreach \j in {0.5, 1.5, ..., 3.75}{
-        \node[inner sep=0pt, minimum size=5pt, fill, orange, circle]  () at (\i, \j) {};
-        };
-    };
-
-    \foreach \i/\j in {
-0.5/3.5,
-1.5/2.5,
-2.5/1.5,
-3.5/0.5
-    }{
-        \node[inner sep=0pt, minimum size=6pt, fill, white]  () at (\i, \j) {};
-    };
-\end{scope}
-
-
-%% Step 5
-\begin{scope}[
-xshift = 10cm,
-scale=0.4
-]
-    \draw[step=2] (0, 0) grid (4, 4);
-\end{scope}
-
-%% Step 6
-\begin{scope}[
-xshift = 12cm,
-yshift = -3.5cm,
-scale=0.4
-]
-    \draw[step=2] (0, 0) grid (4, 4);
-    \draw[->, red, thick] (-1, 8.5) -- (1, 4.2);
-        \foreach \i in {1, 3, ..., 3.75}{
-        \foreach \j in {1, 3, ..., 3.75}{
-        \node[inner sep=0pt, minimum size=5pt, fill, orange, circle]  () at (\i, \j) {};
-        };
-    };
-\foreach \i/\j in {
-1/3, 3/1
-    }{
-        \node[inner sep=0pt, minimum size=6pt, fill, white]  () at (\i, \j) {};
-    };
-\end{scope}
-\node[xshift=7.5cm, yshift=-5cm, right] () {= low rank compressed matrix};
-\node[inner sep=0pt, left, minimum size=6pt, fill, orange, circle]  () at (7.5cm, -5cm) {};
-\end{tikzpicture}
+\input{fig/struct-mat-compress-cluster.tex}
 
 The only matricies in theis decomposition that are new are the diagonal blocks. All other blocks are submatrices of the original coefficient matrix since we are using the ID.
 
@@ -1700,152 +862,15 @@ In matrix form, we have constructed the following telescoping factorization
 
 
 \begin{center}
-    \begin{tikzpicture}[
-    ]
-        \matrix
-        [U matrix]
-        (U3)
-        {
-        \ &&&&&&&\\
-        &\ &&&&&&\\
-        &&\ &&&&&\\
-        &&&\ &&&&\\
-        &&&&\ &&&\\
-        &&&&&\ &&\\
-        &&&&&&\ &\\
-        &&&&&&&\ \\
-        };
-        \node[left = 1em of U3](){=};
-        \matrix
-        [U matrix,
-        right=3em of U3.north east,
-        anchor=north west, ]
-        (U2)
-        {
-        \ &&&\\
-        &\ &&\\
-        &&\ &\\
-        &&&\ \\
-        };
-
-        \draw[thick] (U2-1-1.north west)++(-1em, 1em) to[bend right=15] ++(0, -9em);
-
-        \matrix
-        [U matrix,
-        right=2em of U2.north east,
-        anchor=north west, ]
-        (U1)
-        {
-        \ &\\
-        &\ \\
-        };
-
-        \draw[thick] (U1-1-1.north west)++(-1em, 1em) to[bend right=15] ++(0, -5em);
-
-        \matrix
-        [B matrix,
-        right=2em of U1.north east,
-        anchor=north west, ]
-        (B0)
-        {
-        \ &\\
-        &\ \\
-        };
-        \matrix
-        [V matrix,
-        right=2em of B0.north east,
-        anchor=north west, ]
-        (V1)
-        {
-        \ &\\
-        &\ \\
-        };
-        \node[right=1em of V1](){+};
-
-        \node[OliveGreen, right=2em of U3-2-2](){$U^{(3)}$};
-        \node[OliveGreen, right=1em of U2-1-1](){$U^{(2)}$};
-        \node[OliveGreen, below=.5em of U1](){$U^{(1)}$};
-        \node[OliveGreen, below=.5em of B0](){$B^{(0)}$};
-        \node[OliveGreen, below=.5em of V1](){$V^{(1)T}$};
-    \end{tikzpicture}
+    \input{fig/struct-mat-telescope1.tex}
 \end{center}
 
 \begin{center}
-    \begin{tikzpicture}[ ]
-    \matrix
-        [B matrix,  ]
-        (B1)
-        {
-        &\ &&\\
-        \ &&&\\
-        &&&\ \\
-        &&\ &\\
-        };
-
-    \node[OliveGreen, right=.25em of B1-1-2](){$B^{(1)}$};
-    \draw[thick] (B1-1-2.north east)++(3.2em, .5em) to[bend left=15] ++(0, -5em);
-
-    \matrix
-        [V matrix, right=2em of B1.north east, anchor=north west]
-        (V2)
-        {
-        \ &&&\\
-        &\ &&\\
-        &&\ &\\
-        &&&\ \\
-        };
-        \node[OliveGreen, right=2em of V2-1-1](){$V^{(2)T}$};
-        \node[right=1em of V2](){+};
-        \matrix[B matrix, right=3em of V2.north east, anchor=north west]
-        (B2)
-        {
-        &\ &&&&&&\\
-        \ &&&&&&&\\
-        &&&\ &&&&\\
-        &&\ &&&&&\\
-        &&&&&\ &&\\
-        &&&\ &&&&\\
-        &&&&&&&\ \\
-        &&&&&&\ &\\
-        };
-        \draw[thick] (B2-1-2.north east)++(7em, 1em) to[bend left=15] ++(0, -9em);
-        \node[OliveGreen, right=2em of B2-1-2](){$B^{(2)}$};
-        \node[right=2em of B2](){$\times$};
-    \end{tikzpicture}
+    \input{fig/struct-mat-telescope2.tex}
 \end{center}
 
 \begin{center}
-    \begin{tikzpicture}[ ]
-    \matrix
-        [V matrix, ]
-        (V3)
-        {
-        \ &&&&&&&\\
-        &\ &&&&&&\\
-        &&\ &&&&&\\
-        &&&\ &&&&\\
-        &&&&\ &&&\\
-        &&&&&\ &&\\
-        &&&&&&\ &\\
-        &&&&&&&\ \\
-        };
-        \node[right=1em of V3](){+};
-
-        \node[OliveGreen, right=5em of V3-1-1](){$V^{(3)T}$};
-    \matrix[B matrix, right=3em of V3.north east, anchor=north west]
-        (D3)
-        {
-        \ &&&&&&&\\
-        &\ &&&&&&\\
-        &&\ &&&&&\\
-        &&&\ &&&&\\
-        &&&&\ &&&\\
-        &&&&&\ &&\\
-        &&&&&&\ &\\
-        &&&&&&&\ \\
-        };
-        \node[OliveGreen, right=3em of D3-1-1](){$D^{(3)}$};
-    \end{tikzpicture}
+    \input{fig/struct-mat-telescope3.tex}
 \end{center}
 
 
@@ -1869,36 +894,7 @@ This inversion can be written with fairly simple pseudocode. Recall that we are 
 
 
 \begin{center}
-    \begin{tikzpicture}[shorten >=1pt,
-    edge from parent/.style={draw,-latex},
-    level 1/.style={sibling distance=5cm, minimum width=5cm},
-    level 2/.style={sibling distance=2.5cm, minimum width=2.5cm,font=\small},
-    level 3/.style={sibling distance=1.25cm, minimum width=1.25cm},
-    every node/.style = {shape=rectangle, rounded corners,
-    draw, align=center}]
-    \node[minimum width=10cm](I1){$I_1 = \{1, \ldots, n\}$}
-    child {node{$I_2 = \{1, \ldots, \frac{n}{2}\}$}
-        child{node{$I_4=$\\$\{1, \ldots, \frac{n}{4}\}$}
-            child{node{$I_8$}}
-            child{node{$I_9$}}
-        }
-        child{node{$I_5=$\\$\{\frac{n}{4}+1, \ldots, \frac{n}{2}\}$}
-            child{node{$I_{10}$}}
-            child{node{$I_{11}$}}
-        }
-    }
-    child {node{$I_3 = \{\frac{n}{2}+1, \ldots, n\}$}
-        child{node{$I_6=$\\$\{\frac{n}{2}+1, \ldots, \frac{3n}{4}\}$}
-            child{node{$I_{12}$}}
-            child{node{$I_{13}$}}
-        }
-        child{node{$I_7=$\\$\{ \frac{3n}{4}+1, \ldots, n\}$}
-            child{node{$I_{14}$}}
-            child{node{$I_{15}$}}
-        }
-    }
-    ;
-    \end{tikzpicture}
+    \input{fig/struct-mat-index-set-tree.tex}
 \end{center}
 
 We define all elements of the tree with no descendents as a leaf. Other nodes are called parent nodes. For each leaf node, we define,
@@ -1923,8 +919,7 @@ For each parent node:
 
 
 Then, the pseudocode to compute $A^{-1}$ where $A$ is an HSS matrix is:
-\begin{algorithm}[h!]
-    % \caption{Construct $Q$ so that $QQ^TA\approx A$.}
+\begin{algorithm}[H]
     \begin{algorithmic}
     \FOR{$l = L, L-1, \ldots, 1$}
         \FOR{$\tau$ at level $l$}

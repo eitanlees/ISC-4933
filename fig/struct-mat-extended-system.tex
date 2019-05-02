@@ -1,0 +1,66 @@
+
+\begin{tikzpicture}
+\matrix[
+right delimiter = {]},
+left delimiter = {[},
+matrix of math nodes,
+nodes in empty cells,
+every node/.style={}
+]
+(A)
+{
+$D_4$&&& & 0& $U_4\widetilde{A}_{45}$ & $U_4\widetilde{A}_{46}$ & $U_4\widetilde{A}_{47}$ \\
+&$D_5$&& & $U_5\widetilde{A}_{54}$ & 0   & $U_5\widetilde{A}_{56}$ & $U_5\widetilde{A}_{57}$ \\
+&&$D_6$& & $U_6\widetilde{A}_{64}$ & $U_6\widetilde{A}_{65}$ & 0 & $U_6\widetilde{A}_{67}$ \\
+&&&$D_7$ & $U_7\widetilde{A}_{74}$ & $U_7\widetilde{A}_{75}$ & $U_7\widetilde{A}_{76}$ & 0    \\
+$-V^T_4$&&&&$I$&&&\\
+&$-V^T_5$&&&&$I$&&\\
+&&$-V^T_6$&&&&$I$&\\
+&&&$-V^T_7$&&&&$I$\\
+};
+\matrix[
+right=1.5em of A,
+right delimiter = {]},
+left delimiter = {[},
+matrix of math nodes,
+nodes in empty cells,
+every node/.style={
+minimum height = 1.75em
+}
+]
+(q)
+{
+$q_4$ \\
+$q_5$ \\
+$q_6$ \\
+$q_7$ \\
+$\widetilde{q_4}$\\
+$\widetilde{q_5}$\\
+$\widetilde{q_6}$\\
+$\widetilde{q_7}$\\
+};
+\node[right=1em of q](){=};
+\matrix[
+right=3.5em of q,
+right delimiter = {]},
+left delimiter = {[},
+matrix of math nodes,
+nodes in empty cells,
+every node/.style={
+minimum height = 1.75em
+}
+]
+(f)
+{
+$f_4$ \\
+$f_5$ \\
+$f_6$ \\
+$f_7$ \\
+0\\
+0\\
+0\\
+0\\
+};
+\draw[red, dashed] (A-4-1.south west) -- (f-4-1.south east);
+\draw[red, dashed] (A-2-5.north west)++(0, 1em) -- (A-8-4.south east);
+\end{tikzpicture}
