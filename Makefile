@@ -11,6 +11,6 @@ fast:
 
 
 clean:
-	rm -f ${filename}.{ps,pdf,log,aux,out,dvi,bbl,blg,toc,bcf}
+	rm -f ${filename}.{ps,pdf,log,aux,out,dvi,bbl,blg,toc,bcf,fdb_latexmk,fls}
 	rm -f ${filename}.run.xml
 	rm -rf tmp
