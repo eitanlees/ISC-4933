@@ -1,5 +1,7 @@
 # ISC-4933:  Iterative and Direct Solvers for Linear Systems
 
+![](./fig/PDF/gmg-mu-3-cycle.png)
+
 ## Course Description
 Linear systems play a central role in countless problems including partial differential equations,
 inverse problems, and data analysis. Performing a matrix-vector multiplication, matrix inversion,
